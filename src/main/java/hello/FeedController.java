@@ -12,12 +12,16 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/test2")
-public class Controller3 {
+@RequestMapping("/feed")
+public class FeedController {
     @RequestMapping(value="/user/{id}",method=RequestMethod.GET)
-    public String get(@PathVariable("id") Integer id){
+    public Feed get(@PathVariable("id") Integer id){
+        String[] list = {"caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao" };
+        Feed feed = new Feed();
+        feed.itemList = list;
+        feed.id = id;
         System.out.println("get"+id);
-        return "get";
+        return feed;
     }
 
 
