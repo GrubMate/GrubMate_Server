@@ -26,6 +26,10 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile('com.google.code.gson:gson:2.8.2')
+    compile('org.mongodb:bson:3.0.4')
+    compile('org.mongodb:mongo-java-driver:3.0.1')
+    compile('org.mongodb:mongodb-driver-core:3.0.1')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('com.jayway.jsonpath:json-path')
 }
