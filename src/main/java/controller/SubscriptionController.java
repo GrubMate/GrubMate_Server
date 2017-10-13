@@ -16,7 +16,7 @@ public class SubscriptionController {
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public Subscription post(@PathVariable("id") Integer id, @RequestBody Subscription sub){
-
+        System.out.print("");
         return sub;
     }
 
