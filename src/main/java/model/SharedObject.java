@@ -1,8 +1,8 @@
 package model;
 
-public class DBObject {
+public class SharedObject {
     public static MongoInitializer mi;
-    public DBObject(){}
+    public SharedObject(){}
     public static void createDBObject() {
         mi = new MongoInitializer();
     }

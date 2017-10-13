@@ -1,41 +1,13 @@
 package model;
 
+
+import com.mongodb.*;
+import dataClass.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import dataClass.User;
-
-
-import com.mongodb.*;
-
-
-public class MongoInitializer {
-    public Mongo mg;
-    public DB db;
-    public DBCollection userTable, postTable, subscriptionTable,
-            requestTable, groupInfoTable;
-    public DBCursor userCursor, postCursor, subscriptionCursor,
-            requestCursor, groupInfoCursor;
-
-    public MongoInitializer()
-    {
-        mg = new Mongo("localhost", 27017);
-        db = mg.getDB("GrubMate");
-
-        //creating/getting tables/collection
-        userTable = db.getCollection("userTable");
-        postTable = db.getCollection("postTable");
-        subscriptionTable = db.getCollection("subscriptionTable");
-        requestTable = db.getCollection("requestTable");
-        groupInfoTable = db.getCollection("grouInfoTable");
-
-        //create iterators for these tables
-        userCursor = userTable.find();
-        postCursor = postTable.find();
-        subscriptionCursor = subscriptionTable.find();
-        requestCursor = requestTable.find();
-        groupInfoCursor = groupInfoTable.find();
-    }
+public class userTableInteract {
 
     public BasicDBObject addUser(User usr)
     {
@@ -46,7 +18,7 @@ public class MongoInitializer {
         user.put("userName", usr.userName);
         user.put("facebookID", usr.facebookID);
         user.put("profilePhoto", "https://psmedia.playstation.com/is/image/psmedia/meganav-icon-ps4-01-eu-07sep16?$ExploreNav_VisualRow$");
-        user.put("bio", "Hello I am John Doe");
+        user.put("bio", "This user is lazy. No bio.");
 
         BasicDBList ratings = new BasicDBList();
         ratings.add(new BasicDBObject().append("numOfRatings", 100).append("averageRating", 6)    );
@@ -62,11 +34,9 @@ public class MongoInitializer {
         List<String> groupIDs = new ArrayList<String>();
         user.put("groupID", groupIDs);
 
-        System.out.println("yyeyeyeeyeyey" + user);
+        SharedObject.mi.userTable.insert(user);
 
-        userTable.insert(user);
-
-        System.out.println("a new user named: " + usr.userName + " is added!!!");
+        //System.out.println("a new user named: " + usr.userName + " is added!!!");
 
         return user;
     }
@@ -75,21 +45,21 @@ public class MongoInitializer {
     {
         BasicDBObject user = new BasicDBObject("userID", userID);
 
-        userCursor = userTable.find(user);
+        SharedObject.mi.userCursor = SharedObject.mi.userTable.find(user);
 
-        BasicDBObject answer = (BasicDBObject)userCursor.next();
+        BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
 
         return answer;
     }
 
     public void clearUserTable()
     {
-        userTable.drop();
+        SharedObject.mi.userTable.drop();
     }
 
     public void printUserTable()
     {
-        DBCursor cursor = userTable.find();
+        DBCursor cursor = SharedObject.mi.userTable.find();
         while (cursor.hasNext())
         {
             DBObject obj = cursor.next();
@@ -99,25 +69,25 @@ public class MongoInitializer {
 
     public static void main(String [] args)
     {
-        MongoInitializer mi;
-        mi = new MongoInitializer();
+        userTableInteract uti = new userTableInteract();
 
-        //mi.printUserTable();
+        //uti.printUserTable();
+
+        uti.clearUserTable();
 
         User any = new User();
         any.userID = 999999;
         any.userName = "dads";
         any.facebookID = "ddafqwd";
 
-        mi.addUser(any);
+        uti.addUser(any);
 
 //        BasicDBObject bo = new BasicDBObject();
 //        bo = mi.getUser(123321);
 //        System.out.println(bo);
 
-        mi.printUserTable();
+        uti.printUserTable();
     }
-
 
 
 }
