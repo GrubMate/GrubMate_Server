@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import model.MongoInitializer;
+
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/test2")
 public class Controller3 {
+    private MongoInitializer mi;
+
     @RequestMapping(value="/user/{id}",method=RequestMethod.GET)
     public String get(@PathVariable("id") Integer id){
         System.out.println("get"+id);
@@ -22,12 +26,13 @@ public class Controller3 {
 
 
     @RequestMapping(value="/user/{id}",method=RequestMethod.POST)
-    public Car post(@PathVariable("id") Integer id, @RequestBody Car car){
+    public User post(@PathVariable("id") Integer id, @RequestBody User usr){
         System.out.println("post"+id);
-        System.out.println(car.name);
-        System.out.println(car.miles);
-        return car;
-        //return "I got you message name:" + car.name+ " miles:" + car.miles;
+        mi = new MongoInitializer();
+        mi.addUser(usr);
+        System.out.print("adding" + usr.facebookID);
+        return usr;
+
     }
 
     @RequestMapping(value="/user/{id}",method=RequestMethod.PUT)
