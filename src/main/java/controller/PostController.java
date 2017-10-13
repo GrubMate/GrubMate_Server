@@ -4,6 +4,7 @@ package controller;
 import model.MongoInitializer;
 import org.springframework.web.bind.annotation.*;
 import dataClass.Post;
+import model.postTableInteract;
 
 @RestController
 @RequestMapping("/post")
@@ -19,6 +20,7 @@ public class PostController {
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public Post post(@PathVariable("id") Integer id, @RequestBody Post post){
         System.out.println("post"+id);
+        postTableInteract.addPost(post);
         return post;
     }
 

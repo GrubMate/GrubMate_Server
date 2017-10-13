@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class postTableInteract {
-    public BasicDBObject addUser(Post post)
+    static public BasicDBObject addPost(Post post)
     {
         System.out.println("Entering addUser");
         BasicDBObject user = new BasicDBObject();
@@ -74,7 +74,7 @@ public class postTableInteract {
         any.postID = 676768;
         any.posterID = 777;
 
-        pti.addUser(any);
+        pti.addPost(any);
 
         pti.printPostTable();
     }
