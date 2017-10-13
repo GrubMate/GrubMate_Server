@@ -1,15 +1,13 @@
 package controller;
 
-
-import model.MongoInitializer;
-import org.springframework.web.bind.annotation.*;
 import dataClass.Post;
+import dataClass.Subscription;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-@RestController
-@RequestMapping("/post")
-public class PostController {
-
-
+public class SubscriptionController {
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
     public String get(@PathVariable("id") Integer id){
         System.out.println("get"+id);
@@ -17,9 +15,9 @@ public class PostController {
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
-    public Post post(@PathVariable("id") Integer id, @RequestBody Post post){
-        System.out.println("post"+id);
-        return post;
+    public Subscription post(@PathVariable("id") Integer id, @RequestBody Subscription sub){
+
+        return sub;
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
@@ -33,6 +31,4 @@ public class PostController {
         System.out.println("delete"+id);
         return "delete";
     }
-
-
 }
