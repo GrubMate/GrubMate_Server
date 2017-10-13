@@ -1,17 +1,10 @@
 package controller;
 
-import controller.DBObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import model.MongoInitializer;
 import dataClass.User;
 
-
-import java.util.concurrent.atomic.AtomicLong;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +21,6 @@ public class Controller3 {
     @RequestMapping(value="/user/{id}",method=RequestMethod.POST)
     public User post(@PathVariable("id") Integer id, @RequestBody User usr){
         System.out.println("post"+id);
-        DBObject.mi.addUser(usr);
         System.out.print("adding" + usr.facebookID);
         return usr;
 
