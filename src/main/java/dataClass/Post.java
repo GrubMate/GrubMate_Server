@@ -5,6 +5,7 @@ public class Post {
     public Integer posterID;
     public String[] postPhotos;
     public String[] tags;
+    public String category;
     public String[] timePeriod;
     public String description;
     public Double[] address;

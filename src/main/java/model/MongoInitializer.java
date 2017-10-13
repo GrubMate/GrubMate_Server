@@ -1,10 +1,9 @@
 package model;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import hello.User;
+
+import dataClass.User;
 
 
 import com.mongodb.*;

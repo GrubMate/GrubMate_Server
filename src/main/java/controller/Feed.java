@@ -1,4 +1,4 @@
-package hello;
+package controller;
 
 public class Feed {
     public Integer id;

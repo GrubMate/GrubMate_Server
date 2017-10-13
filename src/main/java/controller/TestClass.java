@@ -1,4 +1,4 @@
-package hello;
+package controller;
 
 public class TestClass {
     Integer var1;

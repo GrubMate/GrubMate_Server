@@ -1,4 +1,4 @@
-package hello;
+package controller;
 
 public class Car {
     public String name;

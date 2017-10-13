@@ -1,4 +1,4 @@
-package hello;
+package dataClass;
 
 import com.mongodb.BasicDBList;
 
