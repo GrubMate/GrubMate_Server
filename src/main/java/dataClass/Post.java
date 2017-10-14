@@ -5,7 +5,7 @@ public class Post {
     public Integer posterID;
     public String title;
     public Boolean isHomeMade;
-    public Integer groupIDs;
+    public Integer[] groupIDs;
     public String[] postPhotos;
     public String[] tags;
     public String category;
