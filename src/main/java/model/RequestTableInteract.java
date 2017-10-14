@@ -11,7 +11,7 @@ public class RequestTableInteract {
         request.put(Request.REQUESTER_ID,newRequest.requesterID);
         request.put(Request.TARGET_POST_ID,newRequest.targetPostID);
         request.put(Request.STATUS,newRequest.status);
-
+        request.put(Request.ADDRESS,newRequest.address);
         SharedObject.mi.requestTable.insert(request);
         return request;
     }
