@@ -96,16 +96,16 @@ public class UserTableInteract {
 
         //uti.printUserTable();
 
-        uti.clearUserTable();
+        //uti.clearUserTable();
 
-        User any = new User();
-
-        any.userName = "dads";
-        any.facebookID = "ddafqwd";
-        any.profilePhoto = "https:wadwad.dadda.com";
-        any.bio = "This user is lazy. No bio!";
-
-        uti.addUser(any);
+//        User any = new User();
+//
+//        any.userName = "dads";
+//        any.facebookID = "ddafqwd";
+//        any.profilePhoto = "https:wadwad.dadda.com";
+//        any.bio = "This user is lazy. No bio!";
+//
+//        uti.addUser(any);
 
 //        BasicDBObject bo = new BasicDBObject();
 //        bo = mi.getUser(123321);

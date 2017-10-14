@@ -94,8 +94,10 @@ public class MongoTest {
         table.update(query, updateObj);
 
         //data of collectiosn are output
-        System.out.println("\nDaten der Coleection:");
+        System.out.println("\nDaten der Coleection again:");
         searchQuery = new BasicDBObject();
+
+        cursor = table.find();
 
         while(cursor.hasNext())
         {
