@@ -18,7 +18,6 @@ public class FeedController {
     public Feed get(@PathVariable("id") Integer id){
         String[] list = {"caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao","caonima","caocaocao" };
         Feed feed = new Feed();
-        feed.itemList = list;
         feed.id = id;
         System.out.println("get"+id);
         return feed;
@@ -26,11 +25,8 @@ public class FeedController {
 
 
     @RequestMapping(value="/user/{id}",method=RequestMethod.POST)
-    public Car post(@PathVariable("id") Integer id, @RequestBody Car car){
-        System.out.println("post"+id);
-        System.out.println(car.name);
-        System.out.println(car.miles);
-        return car;
+    public String post(@PathVariable("id") Integer id){
+        return "";
         //return "I got you message name:" + car.name+ " miles:" + car.miles;
     }
 

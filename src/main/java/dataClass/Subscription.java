@@ -2,6 +2,7 @@ package dataClass;
 
 public class Subscription {
     public Integer subscriptionID;
+    public Integer subscriberID;
     public String[] tags;
     public String category;
     public String query;

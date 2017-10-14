@@ -12,9 +12,17 @@ public class PostController {
 
 
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public String get(@PathVariable("id") Integer id){
+    public Feed get(@PathVariable("id") Integer id){
         System.out.println("get"+id);
-        return "get";
+        Feed feed = new Feed();
+        feed.itemList = new Post[5];
+
+        for (int i=0;i<5;i++) {
+            feed.itemList[i] = new Post();
+            feed.itemList[i].posterID = i*100;
+            feed.itemList[i].title = "post" +  i*100;
+        }
+        return feed;
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)

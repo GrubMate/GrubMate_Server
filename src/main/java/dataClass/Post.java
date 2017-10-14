@@ -3,6 +3,9 @@ package dataClass;
 public class Post {
     public Integer postID;
     public Integer posterID;
+    public String title;
+    public Boolean isHomeMade;
+    public Integer groupIDs;
     public String[] postPhotos;
     public String[] tags;
     public String category;

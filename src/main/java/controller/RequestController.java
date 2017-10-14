@@ -1,6 +1,5 @@
 package controller;
 
-import com.sun.org.apache.regexp.internal.RE;
 import dataClass.Post;
 import dataClass.Request;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 public class RequestController {
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
     public String get(@PathVariable("id") Integer id){
-        System.out.println("get"+id);
         return "get";
     }
 
