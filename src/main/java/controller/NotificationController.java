@@ -1,7 +1,7 @@
 package controller;
 
 import dataClass.Post;
-import model.postTableInteract;
+import model.PostTableInteract;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
