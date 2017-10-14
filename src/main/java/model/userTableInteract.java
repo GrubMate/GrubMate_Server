@@ -7,45 +7,67 @@ import dataClass.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class userTableInteract {
+public class UserTableInteract {
 
     public BasicDBObject addUser(User usr)
     {
         System.out.println("Entering addUser");
         BasicDBObject user = new BasicDBObject();
 
-        user.put("userID", usr.userID);
-        user.put("userName", usr.userName);
-        user.put("facebookID", usr.facebookID);
-        user.put("profilePhoto", "https://psmedia.playstation.com/is/image/psmedia/meganav-icon-ps4-01-eu-07sep16?$ExploreNav_VisualRow$");
-        user.put("bio", "This user is lazy. No bio.");
+        int newID = SharedObject.mi.incrementTargetID("userID");
 
-        BasicDBList ratings = new BasicDBList();
-        ratings.add(new BasicDBObject().append("numOfRatings", 100).append("averageRating", 6)    );
-        user.put("ratings", ratings);
+        user.put(User.USER_ID, newID);
+        user.put(User.USER_NAME, usr.userName);
+        user.put(User.FACEBOOK_ID, usr.facebookID);
+        //user.put("profilePhoto", "https://psmedia.playstation.com/is/image/psmedia/meganav-icon-ps4-01-eu-07sep16?$ExploreNav_VisualRow$");
+        user.put(User.PROFILE_PHOTO, usr.profilePhoto);
 
-        BasicDBList allergy = new BasicDBList();
-        ratings.add(new BasicDBObject().append("allergy1", true).append("allergy2", false)    );
-        user.put("allergy", allergy);
+        user.put(User.BIO, usr.bio);
 
-        //BasicDBList groupID = new BasicDBList();
-        //ratings.add(new BasicDBObject().append("group", 100).append("averageRating", 6)    );
+//        BasicDBList ratings = new BasicDBList();
+//        ratings.add(new BasicDBObject().append("numOfRatings", 0).append("averageRating", 0)    );
+//        user.put("ratings", ratings);
 
-        List<String> groupIDs = new ArrayList<String>();
-        user.put("groupID", groupIDs);
+        user.put(User.RATINGS, usr.ratings);
+
+//        BasicDBList allergy = new BasicDBList();
+//        allergy.add(new BasicDBObject().append("allergy1", false).append("allergy2", false)    );
+//        user.put("allergy", allergy);
+
+        user.put(User.ALLERGY, usr.allergy);
+
+
+
+        user.put(User.GROUP_ID, usr.groupID);
+
+        user.put(User.POSTS_ID, usr.postsID);
+        user.put(User.REQUESTS_ID, usr.requestsID);
+        user.put(User.SUBSCRIPTION_ID, usr.subscriptionID);
+
+//        List<Integer> groupIDs = new ArrayList<Integer>();
+//        user.put("groupID", groupIDs);
+//
+//        List<Integer> postsIDs = new ArrayList<Integer>();
+//        user.put("postID", postsIDs);
+//
+//        List<Integer> requestIDs = new ArrayList<Integer>();
+//        user.put("requestID", requestIDs);
+//
+//        List<Integer> subscriptionIDs = new ArrayList<Integer>();
+//        user.put("subscriptionsID", subscriptionIDs);
 
         SharedObject.mi.userTable.insert(user);
 
-        //System.out.println("a new user named: " + usr.userName + " is added!!!");
+        System.out.println("a new user named: " + usr.userName + " is added!!!");
 
         return user;
     }
 
-    public BasicDBObject getUser(Integer userID)
+    public BasicDBObject getUser(User user)
     {
-        BasicDBObject user = new BasicDBObject("userID", userID);
+        BasicDBObject query = new BasicDBObject("userID", user.userID);
 
-        SharedObject.mi.userCursor = SharedObject.mi.userTable.find(user);
+        SharedObject.mi.userCursor = SharedObject.mi.userTable.find(query);
 
         BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
 
@@ -69,16 +91,19 @@ public class userTableInteract {
 
     public static void main(String [] args)
     {
-        userTableInteract uti = new userTableInteract();
+        //SharedObject.createDBObject();
+        UserTableInteract uti = new UserTableInteract();
 
         //uti.printUserTable();
 
         uti.clearUserTable();
 
         User any = new User();
-        any.userID = 999999;
+
         any.userName = "dads";
         any.facebookID = "ddafqwd";
+        any.profilePhoto = "https:wadwad.dadda.com";
+        any.bio = "This user is lazy. No bio!";
 
         uti.addUser(any);
 

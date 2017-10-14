@@ -1,49 +1,77 @@
 package model;
 
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import dataClass.Post;
-import dataClass.User;
 
-import java.util.ArrayList;
-import java.util.List;
+public class PostTableInteract {
 
-public class postTableInteract {
     static public BasicDBObject addPost(Post post)
     {
         System.out.println("Entering addUser");
-        BasicDBObject user = new BasicDBObject();
+        BasicDBObject newPost = new BasicDBObject();
 
-        user.put("postID", post.postID);
-        user.put("posterID", post.posterID);
+        int newID = SharedObject.mi.incrementTargetID("postID");
 
-        BasicDBList postPhotos = new BasicDBList();
-        postPhotos.add(new BasicDBObject().append("numOfRatings", 100).append("averageRating", 6)    );
-        user.put("ratings", postPhotos);
-
-        BasicDBList allergy = new BasicDBList();
-        postPhotos.add(new BasicDBObject().append("allergy1", true).append("allergy2", false)    );
-        user.put("allergy", allergy);
+        newPost.put(Post.POST_ID, newID);
+        newPost.put(Post.POSTER_ID, post.posterID);
 
 
-        SharedObject.mi.postTable.insert(user);
+
+//        BasicDBList allergy = new BasicDBList();
+//        allergy.add(new BasicDBObject().append("allergy1", true).append("allergy2", false)    );
+//        user.put("allergy", allergy);
+
+        newPost.put(Post.TITLE, post.title);
+        newPost.put(Post.IS_HOMEMADE, post.isHomeMade);
+        newPost.put(Post.GROUP_IDS, post.groupIDs);
+
+        newPost.put(Post.POST_PHOTOS, post.postPhotos);
+
+        newPost.put(Post.TAGS, post.tags);
+        newPost.put(Post.CATEGORY, post.category);
+        newPost.put(Post.TIME_PERIOD, post.timePeriod);
+        newPost.put(Post.DESCRIPTION, post.description);
+        newPost.put(Post.ADDRESS, post.address);
+        newPost.put(Post.TOTAL_QUANTITY, post.totalQuantity);
+        newPost.put(Post.LEFT_QUANTITY, post.leftQuantity);
+        newPost.put(Post.REQUESTS_IDS, post.requestsIDs);
+        newPost.put(Post.IS_ACTIVE, post.isActive);
+        newPost.put(Post.ALLERGY_INFO, post.allergyInfo);
+
+
+
+
+
+        SharedObject.mi.postTable.insert(newPost);
 
         System.out.println("a new user with ID: " + post.postID + " is added by " + post.posterID);
 
-        return user;
+        return newPost;
     }
 
-    public BasicDBObject getPost(Integer postID)
+    public BasicDBObject getPost(Post post)
     {
-        BasicDBObject user = new BasicDBObject("postID", postID);
+        BasicDBObject query = new BasicDBObject(Post.POST_ID, post.postID);
 
-        SharedObject.mi.postCursor = SharedObject.mi.postTable.find(user);
+        SharedObject.mi.postCursor = SharedObject.mi.postTable.find(query);
 
         BasicDBObject answer = (BasicDBObject) SharedObject.mi.postCursor.next();
 
         return answer;
+    }
+
+    public void deletePost(Post post)
+    {
+        BasicDBObject target = new BasicDBObject();
+        target.put(Post.POST_ID, post.postID);
+        SharedObject.mi.postTable.remove(target);
+
+//        BasicDBObject toDelete = getPost(post);
+//        System.out.println(toDelete);
+//        SharedObject.mi.postTable.remove(toDelete);
+
     }
 
     public void clearPostTable()
@@ -63,18 +91,22 @@ public class postTableInteract {
 
     public static void main(String [] args)
     {
-        SharedObject.createDBObject();
-        postTableInteract pti = new postTableInteract();
+        //SharedObject.createDBObject();
+        PostTableInteract pti = new PostTableInteract();
 
         //uti.printPostTable();
 
-        //uti.clearPostTable();
+        //pti.clearPostTable();
 
         Post any = new Post();
-        any.postID = 676768;
+        any.postID = 17;
         any.posterID = 777;
 
         pti.addPost(any);
+
+        pti.printPostTable();
+
+        pti.deletePost(any);
 
         pti.printPostTable();
     }
