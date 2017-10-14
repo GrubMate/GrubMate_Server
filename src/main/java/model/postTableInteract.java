@@ -52,9 +52,9 @@ public class PostTableInteract {
         return newPost;
     }
 
-    public BasicDBObject getPost(Post post)
+    public BasicDBObject getPost(Integer id)
     {
-        BasicDBObject query = new BasicDBObject(Post.POST_ID, post.postID);
+        BasicDBObject query = new BasicDBObject(Post.POST_ID, id);
 
         SharedObject.mi.postCursor = SharedObject.mi.postTable.find(query);
 
