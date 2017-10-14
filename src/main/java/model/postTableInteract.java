@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import dataClass.Post;
+import javafx.geometry.Pos;
 
 public class PostTableInteract {
 
@@ -62,6 +63,62 @@ public class PostTableInteract {
         return answer;
     }
 
+
+    public BasicDBObject toPostObj(Post post)
+    {
+        BasicDBObject newPost = new BasicDBObject();
+
+        newPost.put(Post.TITLE, post.title);
+        newPost.put(Post.IS_HOMEMADE, post.isHomeMade);
+        newPost.put(Post.GROUP_IDS, post.groupIDs);
+
+        newPost.put(Post.POST_PHOTOS, post.postPhotos);
+
+        newPost.put(Post.TAGS, post.tags);
+        newPost.put(Post.CATEGORY, post.category);
+        newPost.put(Post.TIME_PERIOD, post.timePeriod);
+        newPost.put(Post.DESCRIPTION, post.description);
+        newPost.put(Post.ADDRESS, post.address);
+        newPost.put(Post.TOTAL_QUANTITY, post.totalQuantity);
+        newPost.put(Post.LEFT_QUANTITY, post.leftQuantity);
+        newPost.put(Post.REQUESTS_IDS, post.requestsIDs);
+        newPost.put(Post.IS_ACTIVE, post.isActive);
+        newPost.put(Post.ALLERGY_INFO, post.allergyInfo);
+
+        return newPost;
+    }
+
+    public void updatePost(Post post)
+    {
+        BasicDBObject target = new BasicDBObject(Post.POST_ID, post.postID);
+
+        DBCursor c = SharedObject.mi.postCursor;
+
+        c = SharedObject.mi.postTable.find(target);
+        BasicDBObject targetUser = (BasicDBObject) c.next();
+
+
+        BasicDBObject query = new BasicDBObject();
+        query.put(Post.POST_ID, post.postID);
+        query.put(Post.POSTER_ID, post.posterID);
+
+        System.out.println("the original query is: " + query);
+        //query.put("count", originalValue);
+
+        BasicDBObject newDocument = new BasicDBObject();
+        newDocument.put(Post.POST_ID, post.postID);
+        query.put(Post.POSTER_ID, post.posterID);
+        newDocument = toPostObj(post);
+
+
+        BasicDBObject updated = new BasicDBObject();
+        updated.put("$set", newDocument);
+
+        SharedObject.mi.postTable.update(query, updated);
+
+    }
+
+
     public void deletePost(Post post)
     {
         BasicDBObject target = new BasicDBObject();
@@ -98,15 +155,26 @@ public class PostTableInteract {
 
         //pti.clearPostTable();
 
-        Post any = new Post();
-        any.postID = 17;
-        any.posterID = 777;
-
-        pti.addPost(any);
+//        Post any = new Post();
+//        any.postID = 20;
+//        any.posterID = 777;
+//
+//        pti.addPost(any);
 
         pti.printPostTable();
 
-        pti.deletePost(any);
+        //pti.deletePost(any);
+
+        Post anyNew = new Post();
+        anyNew.postID = 20;
+        anyNew.posterID = 777;
+        anyNew.title = "dasddad";
+
+        System.out.println(anyNew.postID + "saddaddd");
+
+        pti.updatePost(anyNew);
+
+
 
         pti.printPostTable();
     }
