@@ -16,14 +16,13 @@ public class PostController {
     public Feed get(@PathVariable("id") Integer id){
         System.out.println("get"+id);
         Feed feed = new Feed();
-        feed.itemList = new Post[5];
-
-        for (int i=0;i<5;i++) {
-            feed.itemList[i] = new Post();
-            feed.itemList[i].posterID = i*100;
-            feed.itemList[i].title = "post" +  i*100;
-        }
+        feed.id = id;
+        //feed.itemList;
         return feed;
+    }
+    public Post get(@PathVariable("id") Integer id, @RequestParam("postID")Integer pid){
+        //PostTableInteract.
+        return new Post();
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
