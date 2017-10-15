@@ -11,6 +11,7 @@ import dataClass.Group;
 import dataClass.Post;
 import dataClass.User;
 import javafx.geometry.Pos;
+import org.springframework.boot.json.GsonJsonParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,8 +64,11 @@ public class PostTableInteract {
 //    }
 
 
-    static public BasicDBObject addPost(String post)
+    static public BasicDBObject addPost(Post p)
     {
+
+        String post = new Gson().toJson(p);
+
         BasicDBObject obj = (BasicDBObject) JSON.parse(post);
 
         System.out.println("Entering addUser");
@@ -153,9 +157,9 @@ public class PostTableInteract {
         return newPost;
     }
 
-    public static void updatePost(String post)
+    public static void updatePost(Post p)
     {
-        //BasicDBObject target = new BasicDBObject(Post.POST_ID, post.postID);
+        String post = new Gson().toJson(p);
 
         BasicDBObject obj = (BasicDBObject) JSON.parse(post);
 
@@ -226,10 +230,9 @@ public class PostTableInteract {
         p.posterID = 7;
         p.title = "Test";
 
-        Gson gson  = new Gson();
-        String s = gson.toJson(p);
 
-        addPost(s);
+
+        addPost(p);
 
 
 
@@ -237,14 +240,10 @@ public class PostTableInteract {
         Post pp = new Post();
         pp.postID = 22;
         pp.posterID = 7;
-        pp.title = "wuwuwuwuwuuwuwuwuwu";
+        pp.title = "asdadadaqeoofqofeqoefq";
         pp.isHomeMade = false;
 
-
-        Gson gso = new Gson();
-        String ss = gso.toJson(pp);
-
-        pti.updatePost(ss);
+        pti.updatePost(pp);
 
         pti.printPostTable();
 
