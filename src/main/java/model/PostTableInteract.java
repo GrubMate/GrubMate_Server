@@ -137,9 +137,9 @@ public class PostTableInteract {
         User user  = UserTableInteract.getUser(userID);
         Group allFriends = new Group();
         //find all friends of this user
-        for(int i =0; i < user.groupID.length;i++)
+        for(int i =0; i < user.groupID.size();i++)
         {
-            Group group = GroupInfoTableInteract.getGroupInfo(user.groupID[i]);
+            Group group = GroupInfoTableInteract.getGroupInfo(user.groupID.get(i));
             if(group.allFriendFlag)
             {
                 allFriends = group;
