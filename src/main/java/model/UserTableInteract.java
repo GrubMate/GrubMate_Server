@@ -31,7 +31,7 @@ public class UserTableInteract {
         if(SharedObject.mi.userCursor.hasNext())
         {
             BasicDBObject user = (BasicDBObject)SharedObject.mi.userCursor.next();
-            newID = (int)user.get(User.USER_ID);
+            newID = (Integer)user.get(User.USER_ID);
             updateUser(usr);
             System.out.println("a new user with ID: " + obj.get(User.USER_ID) + " is now being updated");
 
@@ -103,21 +103,21 @@ public class UserTableInteract {
         //uti.printUserTable();
 
         //uti.clearUserTable();
-
-        User any = new User();
-        any.userID = 9;
-        any.userName = "qwqewqew";
-        any.facebookID = "iii";
-        any.profilePhoto = "https:dadada.dadda.com";
-        any.bio = "This user i!";
-
-        //uti.addUser(any);
-
-        String s = new Gson().toJson(any);
-        uti.updateUser(s);
-//        BasicDBObject bo = new BasicDBObject();
-//        bo = mi.getUser(123321);
-//        System.out.println(bo);
+//
+//        User any = new User();
+//        //any.userID = 9;
+//        any.userName = "qwqewqew";
+//        any.facebookID = "fifiiyf";
+//        any.profilePhoto = "https:dadada.dadda.com";
+//        any.bio = "This user i!";
+//
+//        uti.addUser(any);
+//
+//        String s = new Gson().toJson(any);
+//        uti.updateUser(s);
+////        BasicDBObject bo = new BasicDBObject();
+////        bo = mi.getUser(123321);
+////        System.out.println(bo);
 
         uti.printUserTable();
     }
