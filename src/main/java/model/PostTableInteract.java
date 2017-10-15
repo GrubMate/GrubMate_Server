@@ -136,6 +136,7 @@ public class PostTableInteract {
         User user  = UserTableInteract.getUser(userID);
         Group allFriends = new Group();
         //find all friends of this user
+
         for(int groupID : user.groupID)
         {
             Group group = GroupInfoTableInteract.getGroupInfo(groupID);

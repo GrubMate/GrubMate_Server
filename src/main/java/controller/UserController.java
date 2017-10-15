@@ -20,7 +20,7 @@ public class UserController {
         String[] list = usr.friendList;
         if (list.length != 0) {
             for (int i=0;i<list.length;i++) {
-                System.out.println("friend list" + list[i]);
+                usr.allFriends.add();
             }
         }
         else {
