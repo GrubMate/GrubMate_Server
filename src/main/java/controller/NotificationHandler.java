@@ -2,35 +2,31 @@ package controller;
 
 public class NotificationHandler extends Thread{
     private int receiverID;
-    private String notification;
+    private  NotificationManager nm;
 
-    public NotificationHandler(int receiverID) {
+    public NotificationHandler(int receiverID, NotificationManager nm) {
         this.receiverID = receiverID;
-        notification = null;
-    }
-
-    public void setNotification(String notification) {
-        this.notification = notification;
+        this.nm = nm;
     }
 
     public String waitForNotification() {
         this.run();
-        return notification;
+        if (nm.qMap.get(receiverID)!=null && !nm.qMap.get(receiverID).isEmpty()) {
+            return nm.qMap.get(receiverID).remove();
+        }
+        return null;
     }
 
-    public String getNotification() {
-        return notification;
-    }
 
     public void run() {
         try{
             int timeout = 10;
             while (timeout > 0) {
-                NotificationHandler.sleep(1000);
-                timeout --;
-                if (notification!=null) {
+                if (nm.qMap.get(receiverID)!=null && !nm.qMap.get(receiverID).isEmpty()) {
                    break;
-               }
+                }
+                timeout --;
+                NotificationHandler.sleep(1000);
             }
         }
         catch (InterruptedException e) {

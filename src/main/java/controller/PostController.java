@@ -17,7 +17,8 @@ public class PostController {
         System.out.println("get"+id);
         Feed feed = new Feed();
         feed.id = id;
-        //feed.itemList;
+        Post [] list  = {new Post(), new Post(), new Post()};
+        feed.itemList = list;
         return feed;
     }
     public Post get(@PathVariable("id") Integer id, @RequestParam("postID")Integer pid){
