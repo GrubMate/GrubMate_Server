@@ -7,6 +7,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import dataClass.Group;
 import dataClass.Post;
 import dataClass.User;
 import javafx.geometry.Pos;
@@ -68,7 +69,9 @@ public class PostTableInteract {
 
         System.out.println("Entering addUser");
 
-        int newID = SharedObject.mi.incrementTargetID("postID");
+        //int newID = SharedObject.mi.incrementTargetID("postID");
+
+        int newID = IDCounter.incrementTargetID(IDCounter.POST);
         obj.append(Post.POST_ID, newID);
         SharedObject.mi.postTable.insert(obj);
 
@@ -107,7 +110,7 @@ public class PostTableInteract {
         return obj;
     }
 
-    static public String getPost(Integer postID)
+    public String getPost(Integer postID)
     {
         BasicDBObject query = new BasicDBObject(Post.POST_ID, postID);
 
@@ -150,33 +153,39 @@ public class PostTableInteract {
         return newPost;
     }
 
-    public void updatePost(Post post)
+    public void updatePost(String post)
     {
-        BasicDBObject target = new BasicDBObject(Post.POST_ID, post.postID);
+        //BasicDBObject target = new BasicDBObject(Post.POST_ID, post.postID);
 
-        DBCursor c = SharedObject.mi.postCursor;
-
-        c = SharedObject.mi.postTable.find(target);
-        BasicDBObject targetUser = (BasicDBObject) c.next();
-
+        BasicDBObject obj = (BasicDBObject) JSON.parse(post);
 
         BasicDBObject query = new BasicDBObject();
-        query.put(Post.POST_ID, post.postID);
-        query.put(Post.POSTER_ID, post.posterID);
-
-        System.out.println("the original query is: " + query);
-        //query.put("count", originalValue);
+        query.put(Post.POST_ID, obj.get(Post.POST_ID));
 
         BasicDBObject newDocument = new BasicDBObject();
-        newDocument.put(Post.POST_ID, post.postID);
-        query.put(Post.POSTER_ID, post.posterID);
-        newDocument = toPostObj(post);
+        newDocument.put(Post.POST_ID, obj.get(Post.POST_ID));
+        newDocument.put(Post.POSTER_ID, obj.get(Post.POSTER_ID));
+        newDocument.put(Post.TITLE, obj.get(Post.TITLE));
+        newDocument.put(Post.IS_HOMEMADE, obj.get(Post.IS_HOMEMADE));
+        newDocument.put(Post.GROUP_IDS, obj.get(Post.GROUP_IDS));
+        newDocument.put(Post.POST_PHOTOS, obj.get(Post.POST_PHOTOS));
+        newDocument.put(Post.TAGS, obj.get(Post.TAGS));
+        newDocument.put(Post.CATEGORY, obj.get(Post.CATEGORY));
+        newDocument.put(Post.TIME_PERIOD, obj.get(Post.TIME_PERIOD));
+        newDocument.put(Post.DESCRIPTION, obj.get(Post.DESCRIPTION));
+        newDocument.put(Post.ADDRESS, obj.get(Post.ADDRESS));
+        newDocument.put(Post.TOTAL_QUANTITY, obj.get(Post.TOTAL_QUANTITY));
+        newDocument.put(Post.LEFT_QUANTITY, obj.get(Post.LEFT_QUANTITY));
+        newDocument.put(Post.REQUESTS_IDS, obj.get(Post.REQUESTS_IDS));
+        newDocument.put(Post.IS_ACTIVE, obj.get(Post.IS_ACTIVE));
+        newDocument.put(Post.ALLERGY_INFO, obj.get(Post.ALLERGY_INFO));
 
 
-        BasicDBObject updated = new BasicDBObject();
-        updated.put("$set", newDocument);
+        BasicDBObject updateObj = new BasicDBObject();
+        updateObj.put("$set", newDocument);
 
-        SharedObject.mi.postTable.update(query, updated);
+
+        SharedObject.mi.postTable.update(query, updateObj);
 
     }
 
@@ -239,36 +248,27 @@ public class PostTableInteract {
 
         addPost(s);
 
+
+
+
+        Post pp = new Post();
+        pp.postID = 21;
+        pp.posterID = 7;
+        pp.title = "hahahahahah";
+        pp.isHomeMade = false;
+
+
+        Gson gso = new Gson();
+        String ss = gso.toJson(pp);
+
+        pti.updatePost(ss);
+
         pti.printPostTable();
 
 
         uti.printUserTable();
 
 
-
-//        //pti.deletePost(any);
-//
-//        Post anyNew = new Post();
-//        anyNew.postID = 20;
-//        anyNew.posterID = 777;
-//        anyNew.title = "dasddad";
-//
-//        System.out.println(anyNew.postID + "saddaddd");
-//
-//        pti.updatePost(anyNew);
-//
-//
-//
-//        pti.printPostTable();
-
-
-//        Post any = new Post();
-//        any.postID = 20;
-//        String[] a = pti.getPost(20);
-//
-//        System.out.println(a[1]);
-//
-//        System.out.println(a);
     }
 
 }
