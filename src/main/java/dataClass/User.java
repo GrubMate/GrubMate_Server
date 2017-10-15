@@ -2,6 +2,7 @@ package dataClass;
 
 import com.mongodb.BasicDBList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -10,13 +11,13 @@ public class User {
     public String facebookID;
     public String profilePhoto;
     public String bio;
-    public Integer[] ratings;
+    public ArrayList<Integer> ratings;
     public Boolean[] allergy;
-    public Integer[] allFriends ;
-    public Integer[] groupID;
-    public Integer[] postsID;
-    public Integer[] requestsID;
-    public Integer[] subscriptionID;
+    public ArrayList<Integer> allFriends ;
+    public ArrayList<Integer> groupID;
+    public ArrayList<Integer> postsID;
+    public ArrayList<Integer> requestsID;
+    public ArrayList<Integer> subscriptionID;
     public String[] friendList;
 
     public final static String USER_ID = "userID";
