@@ -12,6 +12,7 @@ public class Subscription {
     public Boolean isActive;
 
     public final static String SUBSCRIPTION_ID = "subscriptionID";
+    public final static String SUBSCRIBER_ID = "subscriberID";
     public final static String TAGS = "tags";
     public final static String CATEGORY = "category";
     public final static String QUERY = "query";

@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @RequestMapping(method= RequestMethod.GET)
     public User get(@RequestParam("userID") Integer uid){
-        System.out.println("user get" + uid);
+        System.out.println(" get" + uid);
         return new User();
     }
 
     @RequestMapping(method=RequestMethod.POST)
     public Integer post(@RequestBody User usr){
+        System.out.println("facebookid" + usr.facebookID);
         Integer userID = UserTableInteract.addUser(usr);
         return userID;
     }
