@@ -62,12 +62,14 @@ public class PostTableInteract {
 //
 //        return newPost;
 //    }
-
-
-    static public BasicDBObject addPost(Post p)
+    public static BasicDBObject addPost(Post post)
     {
+        return addPost(new Gson().toJson(post));
+    }
 
-        String post = new Gson().toJson(p);
+
+    static public BasicDBObject addPost(String post)
+    {
 
         BasicDBObject obj = (BasicDBObject) JSON.parse(post);
 
@@ -159,7 +161,12 @@ public class PostTableInteract {
 
     public static void updatePost(Post p)
     {
-        String post = new Gson().toJson(p);
+        updatePost(new Gson().toJson(p));
+    }
+
+
+    public static void updatePost(String post)
+    {
 
         BasicDBObject obj = (BasicDBObject) JSON.parse(post);
 
@@ -177,10 +184,10 @@ public class PostTableInteract {
     }
 
 
-    public void deletePost(Post post)
+    public void deletePost(int id)
     {
         BasicDBObject target = new BasicDBObject();
-        target.put(Post.POST_ID, post.postID);
+        target.put(Post.POST_ID, id);
         SharedObject.mi.postTable.remove(target);
 
 //        BasicDBObject toDelete = getPost(post);
