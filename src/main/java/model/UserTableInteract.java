@@ -26,18 +26,27 @@ public class UserTableInteract {
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(checkFBid);
 
         int newID;
-        if(SharedObject.mi.userCursor.hasNext()) {
+        if(SharedObject.mi.userCursor.hasNext())
+        {
             BasicDBObject user = (BasicDBObject)SharedObject.mi.userCursor.next();
             newID = (Integer)user.get(User.USER_ID);
             updateUser(usr);
-            System.out.println("user: " + obj.get(User.USER_ID) + " logs in");
+            System.out.println("a new user with ID: " + obj.get(User.USER_ID) + " is now being updated");
 
         }
-        else {
+        else
+        {
             newID = IDCounter.incrementTargetID(IDCounter.USER);
             obj.append(User.USER_ID, newID);
             SharedObject.mi.userTable.insert(obj);
+
+
+            //get
+
+
+
             System.out.println("a new user with ID: " + obj.get(User.USER_ID));
+
         }
 
 
@@ -93,17 +102,17 @@ public class UserTableInteract {
     }
 
 
-    public static String getUserIDFromFBID(Integer userID)
+    public static Integer getUserIDFromFBID(String fbid)
     {
-        BasicDBObject query = new BasicDBObject("userID", userID);
+        BasicDBObject query = new BasicDBObject(User.FACEBOOK_ID, fbid);
 
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(query);
 
         BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
 
-        String fbid = (String) answer.get(User.FACEBOOK_ID);
+        Integer id = (Integer) answer.get(User.USER_ID);
 
-        return fbid;
+        return id;
     }
 
     public static void main(String [] args)
