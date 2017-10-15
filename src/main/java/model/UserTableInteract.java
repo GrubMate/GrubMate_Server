@@ -20,8 +20,6 @@ public class UserTableInteract {
 
         System.out.println("Entering addUser");
 
-        //int newID = SharedObject.mi.incrementTargetID("postID");
-
 
         BasicDBObject checkFBid = new BasicDBObject(User.FACEBOOK_ID, obj.get(User.FACEBOOK_ID));
 
@@ -41,7 +39,6 @@ public class UserTableInteract {
             SharedObject.mi.userTable.insert(obj);
             System.out.println("a new user with ID: " + obj.get(User.USER_ID));
         }
-
 
 
         return newID;
@@ -95,6 +92,20 @@ public class UserTableInteract {
         }
     }
 
+
+    public static String getUserIDFromFBID(Integer userID)
+    {
+        BasicDBObject query = new BasicDBObject("userID", userID);
+
+        SharedObject.mi.userCursor = SharedObject.mi.userTable.find(query);
+
+        BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
+
+        String fbid = (String) answer.get(User.FACEBOOK_ID);
+
+        return fbid;
+    }
+
     public static void main(String [] args)
     {
         //SharedObject.createDBObject();
@@ -120,6 +131,7 @@ public class UserTableInteract {
 ////        System.out.println(bo);
 
         uti.printUserTable();
+        System.out.println(getUserIDFromFBID(12));
     }
 
 
