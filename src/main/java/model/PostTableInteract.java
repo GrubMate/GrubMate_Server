@@ -116,7 +116,7 @@ public class PostTableInteract {
         return obj;
     }
 
-    public static String getPost(Integer postID)
+    public static Post getPost(Integer postID)
     {
         BasicDBObject query = new BasicDBObject(Post.POST_ID, postID);
 
@@ -125,7 +125,10 @@ public class PostTableInteract {
         BasicDBObject answer = (BasicDBObject) SharedObject.mi.postCursor.next();
 
         String s = JSON.serialize(answer);
-        return s;
+
+        Post p = new Gson().fromJson(s, Post.class);
+
+        return p;
     }
 
     public static String[] getAllVisiblePosts(Integer userID)

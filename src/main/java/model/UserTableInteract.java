@@ -69,15 +69,19 @@ public class UserTableInteract {
 
     }
 
-    public BasicDBObject getUser(User user)
+    public static User getUser(Integer id)
     {
-        BasicDBObject query = new BasicDBObject("userID", user.userID);
+        BasicDBObject query = new BasicDBObject("userID", id);
 
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(query);
 
         BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
 
-        return answer;
+        String s = JSON.serialize(answer);
+
+        User u = new Gson().fromJson(s, User.class);
+
+        return u;
     }
 
     public void clearUserTable()
@@ -85,7 +89,7 @@ public class UserTableInteract {
         SharedObject.mi.userTable.drop();
     }
 
-    public void printUserTable()
+    public static void printUserTable()
     {
         DBCursor cursor = SharedObject.mi.userTable.find();
         while (cursor.hasNext())
