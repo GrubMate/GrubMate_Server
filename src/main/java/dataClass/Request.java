@@ -9,7 +9,7 @@ public class Request {
 
     final public static String REQUEST_ID = "requestID";
     final public static String REQUESTER_ID = "requesterID";
-    final public static String TARGET_POST_ID = "targetPostId";
+    final public static String TARGET_POST_ID = "targetPostID";
     final public static String STATUS = "status";
     final public static String ADDRESS = "address";
 }
