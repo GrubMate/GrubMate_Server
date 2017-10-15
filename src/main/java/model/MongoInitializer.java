@@ -19,9 +19,9 @@ public class MongoInitializer {
 
 
 
-    public DBCollection counters; // store counters of each table
+    //public DBCollection counters; // store counters of each table
                                     // use: to generate id
-    public DBCursor countersCursor;
+    //public DBCursor countersCursor;
 
     public MongoInitializer()
     {
@@ -34,7 +34,7 @@ public class MongoInitializer {
         subscriptionTable = db.getCollection("subscriptionTable");
         requestTable = db.getCollection("requestTable");
         groupInfoTable = db.getCollection("grouInfoTable");
-        counters = db.getCollection("counters");
+        //counters = db.getCollection("counters");
 
 
         //create iterators for these tables
@@ -43,10 +43,10 @@ public class MongoInitializer {
         subscriptionCursor = subscriptionTable.find();
         requestCursor = requestTable.find();
         groupInfoCursor = groupInfoTable.find();
-        countersCursor = counters.find();
+       //countersCursor = counters.find();
 
     }
-
+/*
     public void initializeCounters()
     {
         BasicDBObject userCount = new BasicDBObject();
@@ -55,19 +55,19 @@ public class MongoInitializer {
         BasicDBObject subscriptionCount = new BasicDBObject();
         BasicDBObject groupinfoCount = new BasicDBObject();
 
-        userCount.put("id", "userID");
+        userCount.put("id", IDCounter.USER_ID);
         userCount.put("count", 0);
 
-        postCount.put("id", "postID");
+        postCount.put("id", IDCounter.POST_ID);
         postCount.put("count", 0);
 
-        requestCount.put("id", "requestID");
+        requestCount.put("id", IDCounter.REQUEST_ID);
         requestCount.put("count", 0);
 
-        subscriptionCount.put("id", "subscriptionID");
+        subscriptionCount.put("id", IDCounter.SUBSCRIPTION_ID);
         subscriptionCount.put("count", 0);
 
-        groupinfoCount.put("id", "groupinfoID");
+        groupinfoCount.put("id", IDCounter.GROUP_INFO_ID);
         groupinfoCount.put("count", 0);
 
 
@@ -78,7 +78,8 @@ public class MongoInitializer {
         counters.insert(groupinfoCount);
 
     }
-
+    */
+/*
     public int incrementTargetID(String whichTable)
     {
         BasicDBObject target = new BasicDBObject("id", whichTable);
@@ -103,8 +104,8 @@ public class MongoInitializer {
 
         return newValue;
     }
-
-
+*/
+/*
     public BasicDBObject addUser(User usr)
     {
         System.out.println("Entering addUser");
@@ -149,12 +150,13 @@ public class MongoInitializer {
 
         return answer;
     }
-
+*/
     public void clearUserTable()
     {
         userTable.drop();
     }
 
+    /*
     public void printUserTable()
     {
         DBCursor cursor = counters.find();
@@ -164,7 +166,7 @@ public class MongoInitializer {
             System.out.println(obj);
         }
     }
-
+*/
     public static void main(String [] args)
     {
         MongoInitializer mi;
@@ -188,7 +190,7 @@ public class MongoInitializer {
 ////        bo = mi.getUser(123321);
 ////        System.out.println(bo);
 //
-        mi.printUserTable();
+        //mi.printUserTable();
 
     }
 

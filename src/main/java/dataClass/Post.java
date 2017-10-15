@@ -14,7 +14,7 @@ public class Post {
     public Double[] address;
     public Integer totalQuantity;
     public Integer leftQuantity;
-    public Integer requestsIDs;
+    public Integer[] requestsIDs;
     public Boolean isActive;
     public Boolean[] allergyInfo;
 

@@ -1,14 +1,14 @@
 package model;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.util.JSON;
 import dataClass.Request;
 
 public class RequestTableInteract {
-    public BasicDBObject addRequest(Request newRequest)
+    public BasicDBObject addRequest(String requestJson)
     {
-        BasicDBObject request = toRequestObj(newRequest);
-        SharedObject.mi.requestTable.insert(request);
-        return request;
+        BasicDBObject request = (BasicDBObject) JSON.parse(requestJson);
+        return null;
     }
 
 

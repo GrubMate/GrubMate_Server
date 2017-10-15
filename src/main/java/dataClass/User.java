@@ -16,6 +16,7 @@ public class User {
     public Integer[] postsID;
     public Integer[] requestsID;
     public Integer[] subscriptionID;
+    public String[] facebook_friends;
 
     public final static String USER_ID = "userID";
     public final static String USER_NAME = "userName";
