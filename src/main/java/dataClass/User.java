@@ -12,6 +12,7 @@ public class User {
     public String bio;
     public Integer[] ratings;
     public Boolean[] allergy;
+    public Integer[] allFriends ;
     public Integer[] groupID;
     public Integer[] postsID;
     public Integer[] requestsID;
