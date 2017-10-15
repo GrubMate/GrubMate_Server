@@ -67,9 +67,9 @@ public class IDCounter {
     }
 
 
-    public final static String USER_ID = "userID";
-    public final static String POST_ID = "postID";
-    public final static String REQUEST_ID= "requestID";
-    public final static String SUBSCRIPTION_ID = "subscriptionID";
-    public final static String GROUP_INFO_ID = "groupinfoID";
+    public final static String USER = "userID";
+    public final static String POST = "postID";
+    public final static String REQUEST= "requestID";
+    public final static String SUBSCRIPTION = "subscriptionID";
+    public final static String GROUP_INFO = "groupinfoID";
 }

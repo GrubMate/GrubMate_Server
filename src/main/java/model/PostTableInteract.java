@@ -107,7 +107,7 @@ public class PostTableInteract {
         return obj;
     }
 
-    public String getPost(Integer postID)
+    static public String getPost(Integer postID)
     {
         BasicDBObject query = new BasicDBObject(Post.POST_ID, postID);
 
