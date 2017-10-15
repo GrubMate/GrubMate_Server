@@ -2,6 +2,7 @@ package controller;
 
 import dataClass.Subscription;
 import dataClass.User;
+import model.UserTableInteract;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +16,7 @@ public class UserController {
 
     @RequestMapping(method=RequestMethod.POST)
     public Integer post(@RequestBody User usr){
-        System.out.print("received user info");
-        return 11;
+        Integer userID = UserTableInteract.addUser(usr);
+        return userID;
     }
 }

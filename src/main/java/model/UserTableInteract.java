@@ -12,7 +12,7 @@ import java.util.List;
 
 public class UserTableInteract {
 
-    static public BasicDBObject addUser(User u)
+    static public Integer addUser(User u)
     {
         String usr = new Gson().toJson(u);
 
@@ -30,6 +30,8 @@ public class UserTableInteract {
         int newID;
         if(SharedObject.mi.userCursor.hasNext())
         {
+            BasicDBObject user = (BasicDBObject)SharedObject.mi.userCursor.next();
+            newID = (int)user.get(User.USER_ID);
             updateUser(usr);
             System.out.println("a new user with ID: " + obj.get(User.USER_ID) + " is now being updated");
 
@@ -46,7 +48,7 @@ public class UserTableInteract {
 
 
 
-        return obj;
+        return newID;
     }
 
 
