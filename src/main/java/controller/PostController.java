@@ -17,7 +17,7 @@ public class PostController {
         System.out.println("get"+id);
         Feed feed = new Feed();
         feed.id = id;
-        Post [] list  = {new Post(), new Post(), new Post()};
+        String[] list  = {" "};
         feed.itemList = list;
         return feed;
     }
