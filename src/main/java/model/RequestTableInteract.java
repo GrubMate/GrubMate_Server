@@ -1,14 +1,25 @@
 package model;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.util.JSON;
+import dataClass.Post;
 import dataClass.Request;
 
 public class RequestTableInteract {
-    public BasicDBObject addRequest(Request newRequest)
+    public static BasicDBObject addRequest(String requestJson)
     {
-        BasicDBObject request = toRequestObj(newRequest);
+        //insert request
+        BasicDBObject request = (BasicDBObject) JSON.parse(requestJson);
+        int id = IDCounter.incrementTargetID(IDCounter.REQUEST);
+        request.append(Request.REQUEST_ID,id);
         SharedObject.mi.requestTable.insert(request);
-        return request;
+
+        int postID = (int)request.get(Request.TARGET_POST_ID);
+        BasicDBObject post = (BasicDBObject) JSON.parse(PostTableInteract.getPost(postID);
+        ((BasicDBList)(post.get(Post.REQUESTS_IDS))).add(postID);
+        PostTableInteract.
+
     }
 
 
