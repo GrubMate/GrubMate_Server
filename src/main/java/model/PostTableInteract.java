@@ -110,7 +110,7 @@ public class PostTableInteract {
         return obj;
     }
 
-    public String getPost(Integer postID)
+    public static String getPost(Integer postID)
     {
         BasicDBObject query = new BasicDBObject(Post.POST_ID, postID);
 
@@ -153,7 +153,7 @@ public class PostTableInteract {
         return newPost;
     }
 
-    public void updatePost(String post)
+    public static void updatePost(String post)
     {
         //BasicDBObject target = new BasicDBObject(Post.POST_ID, post.postID);
 

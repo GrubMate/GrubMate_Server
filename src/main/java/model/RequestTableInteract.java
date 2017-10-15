@@ -16,7 +16,7 @@ public class RequestTableInteract {
         SharedObject.mi.requestTable.insert(request);
 
         int postID = (int)request.get(Request.TARGET_POST_ID);
-        BasicDBObject post = (BasicDBObject) JSON.parse(PostTableInteract.getPost(postID));
+        BasicDBObject post = (BasicDBObject) JSON.parse(PostTableInteract.getPost(postID);
         ((BasicDBList)(post.get(Post.REQUESTS_IDS))).add(postID);
         PostTableInteract.
 
