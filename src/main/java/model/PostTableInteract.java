@@ -253,47 +253,13 @@ public class PostTableInteract {
     {
         //SharedObject.createDBObject();
         PostTableInteract pti = new PostTableInteract();
-        UserTableInteract uti = new UserTableInteract();
-
-
-        //uti.printPostTable();
-
-        //pti.clearPostTable();
-
-//        Post any = new Post();
-//        any.postID = 20;
-//        any.posterID = 777;
-//
-//        pti.addPost(any);
-
-        pti.printPostTable();
-        uti.printUserTable();
-
-
-
-        Post p = new Post();
-        p.posterID = 7;
-        p.title = "Test";
-
-
-
-        addPost(p);
+        //UserTableInteract uti = new UserTableInteract();
 
 
 
 
-        Post pp = new Post();
-        pp.postID = 22;
-        pp.posterID = 7;
-        pp.title = "asdadadaqeoofqofeqoefq";
-        pp.isHomeMade = false;
-
-        pti.updatePost(pp);
 
         pti.printPostTable();
-
-
-        uti.printUserTable();
 
 
     }
