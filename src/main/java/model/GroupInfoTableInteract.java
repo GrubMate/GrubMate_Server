@@ -38,13 +38,19 @@ public class GroupInfoTableInteract {
         BasicDBObject getTheAdder = (BasicDBObject) SharedObject.mi.userCursor.next();
 
 
+
+
+
         BasicDBList list = (BasicDBList)getTheAdder.get(User.GROUP_ID);
+
         if(list==null)
         {
             list = new BasicDBList();
 
         }
         list.add(newID);
+
+
 
 
         BasicDBObject query = new BasicDBObject();
