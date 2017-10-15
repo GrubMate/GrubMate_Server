@@ -23,7 +23,7 @@ public class RequestTableInteract {
         SharedObject.mi.requestTable.insert(request);
 
         int postID = (int)request.get(Request.TARGET_POST_ID);
-        BasicDBObject post = (BasicDBObject) JSON.parse(PostTableInteract.getPost(postID));
+        BasicDBObject post = (BasicDBObject) JSON.parse(new Gson().toJson(PostTableInteract.getPost(postID)));
         BasicDBList list = (BasicDBList)(post.get(Post.REQUESTS_IDS));
         if(list==null)
         {
@@ -37,12 +37,12 @@ public class RequestTableInteract {
         return request;
     }
 
-    public static String getRequest(int id)
+    public static Request getRequest(int id)
     {
         BasicDBObject query = new BasicDBObject(Request.REQUEST_ID,id);
         SharedObject.mi.requestCursor = SharedObject.mi.requestTable.find(query);
         BasicDBObject result = (BasicDBObject)SharedObject.mi.requestCursor.next();
-        return result.toString();
+        return new Gson().fromJson(result.toString(),Request.class);
     }
 
     public static void deleteRequest(int id)

@@ -90,7 +90,7 @@ public class GroupInfoTableInteract {
     }
 
 
-    public static String getGroupInfo(Integer groupInfoID)
+    public static Group getGroupInfo(Integer groupInfoID)
     {
         BasicDBObject query = new BasicDBObject(Group.GROUPID, groupInfoID);
 
@@ -99,7 +99,7 @@ public class GroupInfoTableInteract {
         BasicDBObject answer = (BasicDBObject) SharedObject.mi.groupInfoCursor.next();
 
         String s = JSON.serialize(answer);
-        return s;
+        return new Gson().fromJson(s,Group.class);
     }
 
     public void clearGroupInfoTable()

@@ -131,31 +131,10 @@ public class PostTableInteract {
         return p;
     }
 
-    public static String[] getAllVisiblePosts(Integer userID)
+    public static Post[] getAllVisiblePosts(Integer userID)
     {
-        ArrayList<String> result = new ArrayList<String>();
-        DBCursor cursor = SharedObject.mi.postTable.find();
-        while(cursor.hasNext())
-        {
-           BasicDBObject post = (BasicDBObject)cursor.next();
-           BasicDBList groupIDs = (BasicDBList)post.get(Post.GROUP_IDS);
-           for(int i =0; i < groupIDs.size();i++)
-           {
-               int groupID = (int)groupIDs.get(i);
-               BasicDBObject group = (BasicDBObject)JSON.parse(GroupInfoTableInteract.getGroupInfo(groupID));
-               BasicDBList userIDs = (BasicDBList)group.get(Group.MEMBER_IDS);
-               for(int j = 0; j < userIDs.size();j++)
-               {
-                   if(userID == (int)userIDs.get(j))
-                   {
-                       result.add(post.toString());
-                       j = userIDs.size();
-                       i = groupIDs.size();
-                   }
-               }
-           }
-        }
-        return result.toArray(new String[result.size()]);
+
+        return null;
     }
 
 
