@@ -69,7 +69,7 @@ public class GroupInfoTableInteract {
     }
 
 
-    public void updateGroupInfo(String updatedGroupInfo)
+    public static void updateGroupInfo(String updatedGroupInfo)
     {
         BasicDBObject obj = (BasicDBObject) JSON.parse(updatedGroupInfo);
 
@@ -90,7 +90,7 @@ public class GroupInfoTableInteract {
     }
 
 
-    public String getGroupInfo(Integer groupInfoID)
+    public static String getGroupInfo(Integer groupInfoID)
     {
         BasicDBObject query = new BasicDBObject(Group.GROUPID, groupInfoID);
 
