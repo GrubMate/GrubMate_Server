@@ -26,7 +26,7 @@ public class RequestTableInteract {
         SharedObject.mi.requestTable.insert(request);
 
         int userID = (int)request.get(Request.REQUESTER_ID);
-        BasicDBObject user = (BasicDBObject) JSON.parse(UserTableInteract.getUserJson(userID));
+        BasicDBObject user = (BasicDBObject) JSON.parse(new Gson().toJson(UserTableInteract.getUser(userID)));
         BasicDBList lis = (BasicDBList)(user.get(User.REQUESTS_ID));
 
         if(lis == null)
@@ -44,7 +44,7 @@ public class RequestTableInteract {
 
 
         int postID = (int)request.get(Request.TARGET_POST_ID);
-        BasicDBObject post = (BasicDBObject) JSON.parse(PostTableInteract.getPostJson(postID));
+        BasicDBObject post = (BasicDBObject) JSON.parse(new Gson().toJson(PostTableInteract.getPost(postID)));
         BasicDBList list = (BasicDBList)(post.get(Post.REQUESTS_IDS));
         if(list == null)
         {
