@@ -161,28 +161,11 @@ public class PostTableInteract {
 
         BasicDBObject query = new BasicDBObject();
         query.put(Post.POST_ID, obj.get(Post.POST_ID));
-
-        BasicDBObject newDocument = new BasicDBObject();
-        newDocument.put(Post.POST_ID, obj.get(Post.POST_ID));
-        newDocument.put(Post.POSTER_ID, obj.get(Post.POSTER_ID));
-        newDocument.put(Post.TITLE, obj.get(Post.TITLE));
-        newDocument.put(Post.IS_HOMEMADE, obj.get(Post.IS_HOMEMADE));
-        newDocument.put(Post.GROUP_IDS, obj.get(Post.GROUP_IDS));
-        newDocument.put(Post.POST_PHOTOS, obj.get(Post.POST_PHOTOS));
-        newDocument.put(Post.TAGS, obj.get(Post.TAGS));
-        newDocument.put(Post.CATEGORY, obj.get(Post.CATEGORY));
-        newDocument.put(Post.TIME_PERIOD, obj.get(Post.TIME_PERIOD));
-        newDocument.put(Post.DESCRIPTION, obj.get(Post.DESCRIPTION));
-        newDocument.put(Post.ADDRESS, obj.get(Post.ADDRESS));
-        newDocument.put(Post.TOTAL_QUANTITY, obj.get(Post.TOTAL_QUANTITY));
-        newDocument.put(Post.LEFT_QUANTITY, obj.get(Post.LEFT_QUANTITY));
-        newDocument.put(Post.REQUESTS_IDS, obj.get(Post.REQUESTS_IDS));
-        newDocument.put(Post.IS_ACTIVE, obj.get(Post.IS_ACTIVE));
-        newDocument.put(Post.ALLERGY_INFO, obj.get(Post.ALLERGY_INFO));
+        
 
 
         BasicDBObject updateObj = new BasicDBObject();
-        updateObj.put("$set", newDocument);
+        updateObj.put("$set", obj);
 
 
         SharedObject.mi.postTable.update(query, updateObj);
@@ -252,9 +235,9 @@ public class PostTableInteract {
 
 
         Post pp = new Post();
-        pp.postID = 21;
+        pp.postID = 22;
         pp.posterID = 7;
-        pp.title = "hahahahahah";
+        pp.title = "wuwuwuwuwuuwuwuwuwu";
         pp.isHomeMade = false;
 
 
