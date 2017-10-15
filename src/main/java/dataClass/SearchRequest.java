@@ -7,4 +7,9 @@ public class SearchRequest {
     public String[] tags;
     public int[] time;
     public String description;
+
+    public boolean match(Post post)
+    {
+        return true;
+    }
 }

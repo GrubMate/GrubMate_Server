@@ -34,4 +34,5 @@ public class Post {
     public final static String REQUESTS_IDS = "requestsIDs";
     public final static String IS_ACTIVE = "isActive";
     public final static String ALLERGY_INFO = "allergyInfo";
+
 }
