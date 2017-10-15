@@ -17,6 +17,16 @@ public class UserController {
     @RequestMapping(method=RequestMethod.POST)
     public Integer post(@RequestBody User usr){
         System.out.println("facebookid" + usr.facebookID);
+        String[] list = usr.friendList;
+        if (list.length != 0) {
+            for (int i=0;i<list.length;i++) {
+                System.out.println("friend list" + list[i]);
+            }
+        }
+        else {
+            System.out.println("no friends");
+        }
+
         Integer userID = UserTableInteract.addUser(usr);
         return userID;
     }

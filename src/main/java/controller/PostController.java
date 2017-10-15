@@ -1,7 +1,6 @@
 package controller;
 
 
-import model.MongoInitializer;
 import model.PostTableInteract;
 import org.springframework.web.bind.annotation.*;
 import dataClass.Post;
@@ -13,11 +12,11 @@ public class PostController {
 
 
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public Feed get(@PathVariable("id") Integer id){
+    public PostFeed get(@PathVariable("id") Integer id){
         System.out.println("get"+id);
-        Feed feed = new Feed();
+        PostFeed feed = new PostFeed();
         feed.id = id;
-        String[] list  = {" "};
+        Post[] list  = {};
         feed.itemList = list;
         return feed;
     }
