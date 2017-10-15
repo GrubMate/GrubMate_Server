@@ -12,11 +12,11 @@ public class PostController {
 
 
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public PostFeed get(@PathVariable("id") Integer id){
-        System.out.println("get"+id);
+    public PostFeed get(@PathVariable("id") Integer uid){
+        System.out.println("get all visible user id: "+uid);
         PostFeed feed = new PostFeed();
-        feed.id = id;
-        Post[] list  = {};
+        feed.id = uid;
+        Post[] list  = PostTableInteract.getAllVisiblePosts(uid);
         feed.itemList = list;
         return feed;
     }

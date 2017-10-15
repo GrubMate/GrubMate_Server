@@ -28,22 +28,18 @@ public class UserTableInteract {
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(checkFBid);
 
         int newID;
-        if(SharedObject.mi.userCursor.hasNext())
-        {
+        if(SharedObject.mi.userCursor.hasNext()) {
             BasicDBObject user = (BasicDBObject)SharedObject.mi.userCursor.next();
             newID = (Integer)user.get(User.USER_ID);
             updateUser(usr);
-            System.out.println("a new user with ID: " + obj.get(User.USER_ID) + " is now being updated");
+            System.out.println("user: " + obj.get(User.USER_ID) + " logs in");
 
         }
-        else
-        {
+        else {
             newID = IDCounter.incrementTargetID(IDCounter.USER);
             obj.append(User.USER_ID, newID);
             SharedObject.mi.userTable.insert(obj);
-
             System.out.println("a new user with ID: " + obj.get(User.USER_ID));
-
         }
 
 
