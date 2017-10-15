@@ -133,8 +133,42 @@ public class PostTableInteract {
 
     public static Post[] getAllVisiblePosts(Integer userID)
     {
+        ArrayList<Post> result = new ArrayList<>();
+        User user  = UserTableInteract.getUser(userID);
+        Group allFriends = new Group();
+        //find all friends of this user
+        for(int i =0; i < user.groupID.length;i++)
+        {
+            Group group = GroupInfoTableInteract.getGroupInfo(user.groupID[i]);
+            if(group.allFriendFlag)
+            {
+                allFriends = group;
+                break;
+            }
+        }
+        //go though each of his frineds
+        for(int friendID : allFriends.memberIDs)
+        {
+            User friend = UserTableInteract.getUser(friendID);
+            //check every post of his frineds
+            for(int postID : friend.postsID)
+            {
+                Post post = PostTableInteract.getPost(postID);
+                if(post.isActive)
+                {
+                    for(int groupID:post.groupIDs)
+                    {
+                        Group visibleGroup = GroupInfoTableInteract.getGroupInfo(groupID);
+                        if(visibleGroup.hasUser(user.userID))
+                        {
+                            result.add(post);
+                        }
+                    }
+                }
 
-        return null;
+            }
+        }
+        return result.toArray(new Post[result.size()]);
     }
 
 

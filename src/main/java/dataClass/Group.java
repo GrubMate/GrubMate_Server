@@ -13,5 +13,18 @@ public class Group {
     public final static String MEMBER_IDS = "memberIDs";
     public final static String ALL_FRIEND_FLAG = "allFriendFlag";
 
+    public boolean hasUser(int userID)
+    {
+        for(int id : memberIDs)
+        {
+            if(id==userID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 }
