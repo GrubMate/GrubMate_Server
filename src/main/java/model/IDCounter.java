@@ -9,6 +9,12 @@ public class IDCounter {
     private static DBCollection counters = SharedObject.mi.db.getCollection(NAME);
     private static DBCursor countersCursor= counters.find();
 
+
+    public final static String USER = "userID";
+    public final static String POST = "postID";
+    public final static String REQUEST= "requestID";
+    public final static String SUBSCRIPTION = "subscriptionID";
+    public final static String GROUP_INFO = "groupinfoID";
     public static int incrementTargetID(String whichTable)
     {
         BasicDBObject target = new BasicDBObject("id", whichTable);
@@ -42,19 +48,19 @@ public class IDCounter {
         BasicDBObject subscriptionCount = new BasicDBObject();
         BasicDBObject groupinfoCount = new BasicDBObject();
 
-        userCount.put("id", IDCounter.USER_ID);
+        userCount.put("id", IDCounter.USER);
         userCount.put("count", 0);
 
-        postCount.put("id", IDCounter.POST_ID);
+        postCount.put("id", IDCounter.POST);
         postCount.put("count", 0);
 
-        requestCount.put("id", IDCounter.REQUEST_ID);
+        requestCount.put("id", IDCounter.REQUEST);
         requestCount.put("count", 0);
 
-        subscriptionCount.put("id", IDCounter.SUBSCRIPTION_ID);
+        subscriptionCount.put("id", IDCounter.SUBSCRIPTION);
         subscriptionCount.put("count", 0);
 
-        groupinfoCount.put("id", IDCounter.GROUP_INFO_ID);
+        groupinfoCount.put("id", IDCounter.GROUP_INFO);
         groupinfoCount.put("count", 0);
 
 
@@ -67,9 +73,5 @@ public class IDCounter {
     }
 
 
-    public final static String USER = "userID";
-    public final static String POST = "postID";
-    public final static String REQUEST= "requestID";
-    public final static String SUBSCRIPTION = "subscriptionID";
-    public final static String GROUP_INFO = "groupinfoID";
+
 }
