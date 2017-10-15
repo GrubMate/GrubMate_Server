@@ -10,7 +10,6 @@ import com.mongodb.util.JSON;
 import dataClass.Group;
 import dataClass.Post;
 import dataClass.User;
-import javafx.geometry.Pos;
 import org.springframework.boot.json.GsonJsonParser;
 
 import java.util.ArrayList;
@@ -137,9 +136,9 @@ public class PostTableInteract {
         User user  = UserTableInteract.getUser(userID);
         Group allFriends = new Group();
         //find all friends of this user
-        for(int i =0; i < user.groupID.length;i++)
+        for(int groupID : user.groupID)
         {
-            Group group = GroupInfoTableInteract.getGroupInfo(user.groupID[i]);
+            Group group = GroupInfoTableInteract.getGroupInfo(groupID);
             if(group.allFriendFlag)
             {
                 allFriends = group;
