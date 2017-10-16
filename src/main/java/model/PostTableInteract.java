@@ -130,7 +130,7 @@ public class PostTableInteract {
         return p;
     }
 
-    public static Post[] getAllVisiblePosts(Integer userID)
+    public static ArrayList<Post> getAllVisiblePosts(Integer userID)
     {
         ArrayList<Post> result = new ArrayList<>();
         User user  = UserTableInteract.getUser(userID);
@@ -162,7 +162,7 @@ public class PostTableInteract {
 
             }
         }
-        return result.toArray(new Post[result.size()]);
+        return result;
     }
 
 
