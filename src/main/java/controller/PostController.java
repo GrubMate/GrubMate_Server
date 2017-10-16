@@ -43,14 +43,16 @@ public class PostController {
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
-    public String put(@PathVariable("id") Integer id){
-        System.out.println("put"+id);
+    public String put(@PathVariable("id") Integer id, @RequestBody Post post){
+        System.out.println("edit post"+post.postID);
+        PostTableInteract.updatePost(post);
         return "put";
     }
 
-    @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-    public String delete(@PathVariable("id") Integer id){
-        System.out.println("delete"+id);
+    @RequestMapping(value="/{id}/{postID}",method=RequestMethod.DELETE)
+    public String delete(@PathVariable("id") Integer id, @PathVariable("postID") Integer pid){
+        System.out.println("delete post"+pid);
+        PostTableInteract.deletePost(pid);
         return "delete";
     }
 

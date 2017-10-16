@@ -283,13 +283,10 @@ public class PostTableInteract {
     public static void main(String [] args)
     {
         PostTableInteract pti = new PostTableInteract();
-        UserTableInteract uti = new UserTableInteract();
-
-        uti.printUserTable();
-        pti.printPostTable();
 
 
-<<<<<<< Updated upstream
+
+
 //        User u = new User();
 //        u.userID = 18;
 //        u.facebookID = "dadoooo";
@@ -306,12 +303,12 @@ public class PostTableInteract {
 //        p.posterID = 18;
 //        PostTableInteract.addPost(p);
 
-        pti.deletePost(68);
-=======
-        //pti.clearPostTable();
->>>>>>> Stashed changes
+       // pti.deletePost(68);
 
-        uti.printUserTable();
+        //pti.clearPostTable();
+
+
+        //uti.printUserTable();
         pti.printPostTable();
 
 

@@ -15,8 +15,9 @@ import java.util.Arrays;
 
 public class GroupInfoTableInteract {
 
-    static public BasicDBObject addGroupinfo(String groupInfo)
+    static public Integer addGroupinfo(Group group)
     {
+        String groupInfo = new Gson().toJson(group);
         BasicDBObject obj = (BasicDBObject) JSON.parse(groupInfo);
 
         System.out.println("Entering addGroupInfo");
@@ -68,7 +69,7 @@ public class GroupInfoTableInteract {
 
         SharedObject.mi.userTable.update(query, updateObj);
 
-        return obj;
+        return newID;
     }
 
 
@@ -124,47 +125,8 @@ public class GroupInfoTableInteract {
     public static void main(String [] args)
     {
         GroupInfoTableInteract giti = new GroupInfoTableInteract();
-        UserTableInteract uti = new UserTableInteract();
 
         giti.printGroupInfoTable();;
-
-        uti.printUserTable();
-
-        Group g = new Group();
-        //g.allFriendFlag = true;
-        g.groupName = "haha";
-        g.groupOwnerID = 7;
-
-        Integer[] i = new Integer[] {2313, 292929 , 42, 32};
-        g.memberIDs = new ArrayList<Integer>(Arrays.asList(i));
-
-        Gson gson = new Gson();
-        String s = gson.toJson(g);
-
-        addGroupinfo(s);
-
-
-        giti.printGroupInfoTable();;
-
-        uti.printUserTable();
-
-        Group gg = new Group();
-        gg.groupID = 7;
-        //gg.allFriendFlag = false;
-        gg.groupName = "haha";
-        gg.groupOwnerID = 7;
-
-        Integer[] ii = new Integer[] {2313, 292929 , 42, 32};
-        gg.memberIDs = new ArrayList<Integer>(Arrays.asList(ii));
-
-        Gson gso = new Gson();
-        String ss = gso.toJson(gg);
-
-        giti.updateGroupInfo(ss);
-
-        giti.printGroupInfoTable();;
-
-        uti.printUserTable();
 
 
 

@@ -17,15 +17,18 @@ public class FriendController {
 
 
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public ArrayList<Pair<Integer,String>> get(@PathVariable("id") Integer uid){
+    public FriendFeed get(@PathVariable("id") Integer uid){
         User user = UserTableInteract.getUser(uid);
         ArrayList<Integer> allFriends = user.allFriends;
-        ArrayList<Pair<Integer,String>> feed = new ArrayList<Pair<Integer,String>>();
+        FriendFeed feed = new FriendFeed();
         if (allFriends!=null) {
             for (int i=0;i<allFriends.size();i++) {
                 User friend = UserTableInteract.getUser(allFriends.get(i));
                 if (friend!=null) {
-                    feed.add(new Pair<Integer, String>(friend.userID,friend.userName));
+                    Friend f = new Friend();
+                    f.id = friend.userID;
+                    f.name = friend.userName;
+                    feed.itemList.add(f);
                 }
 
             }

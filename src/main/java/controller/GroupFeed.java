@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class GroupFeed {
     public Integer id;
-    ArrayList<Group> itemList;
+    public ArrayList<Group> itemList;
     public GroupFeed () {
         itemList = new ArrayList<Group>();
     }
