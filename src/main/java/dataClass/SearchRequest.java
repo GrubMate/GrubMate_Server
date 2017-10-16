@@ -7,6 +7,7 @@ public class SearchRequest {
     public String keyword;
     public String category;
     public Integer[] time;
+    public String timePeriod; //temp
     public Boolean[] allergy;
 
     public boolean match(Post post)
@@ -30,7 +31,8 @@ public class SearchRequest {
             }
         }
         boolean categoryMatch = (category=="") || category.equals(post.category.toLowerCase());
-        boolean timeMatch = time[0]<= post.timePeriod[0] && time[1]>=post.timePeriod[1];
+        //boolean timeMatch = time[0]<= post.timePeriod[0] && time[1]>=post.timePeriod[1];
+        boolean timeMatch = true;
         boolean allergyMatch = true;
         //TODO
         /*
