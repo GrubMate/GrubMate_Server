@@ -7,7 +7,7 @@ public class Group {
     public Integer groupOwnerID;
     public String groupName;
     public ArrayList<Integer> memberIDs;
-    public boolean allFriendFlag;
+    //public boolean allFriendFlag;
 
     public final static String GROUPID = "groupID";
     public final static String GROUP_OWNER_ID = "groupOwnerID";

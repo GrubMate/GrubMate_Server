@@ -131,7 +131,7 @@ public class GroupInfoTableInteract {
         uti.printUserTable();
 
         Group g = new Group();
-        g.allFriendFlag = true;
+        //g.allFriendFlag = true;
         g.groupName = "haha";
         g.groupOwnerID = 7;
 
@@ -150,7 +150,7 @@ public class GroupInfoTableInteract {
 
         Group gg = new Group();
         gg.groupID = 7;
-        gg.allFriendFlag = false;
+        //gg.allFriendFlag = false;
         gg.groupName = "haha";
         gg.groupOwnerID = 7;
 
