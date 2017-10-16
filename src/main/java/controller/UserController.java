@@ -23,7 +23,10 @@ public class UserController {
         if (list.length != 0) {
             usr.allFriends = new ArrayList<Integer>();
             for (int i=0;i<list.length;i++) {
-                usr.allFriends.add(UserTableInteract.getUserIDFromFBID(list[i]));
+                System.out.println(list[i]);
+                System.out.println(UserTableInteract.getUserIDFromFBID(list[i]));
+                if (UserTableInteract.getUserIDFromFBID(list[i])!=null)
+                    usr.allFriends.add(UserTableInteract.getUserIDFromFBID(list[i]));
             }
         }
         else {
