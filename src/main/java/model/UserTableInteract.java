@@ -134,7 +134,7 @@ public class UserTableInteract {
 ////        System.out.println(bo);
 
         uti.printUserTable();
-        System.out.println(getUserIDFromFBID(12));
+       // System.out.println(getUserIDFromFBID(12));
     }
 
 
