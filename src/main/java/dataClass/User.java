@@ -31,4 +31,7 @@ public class User {
     public final static String POSTS_ID = "postsID";
     public final static String REQUESTS_ID = "requestsID";
     public final static String SUBSCRIPTION_ID = "subscriptionID";
+    public final static String FRIEND_LIST = "friendlist";
+    public final static String ALL_FRIENDS = "allFriends";
+
 }
