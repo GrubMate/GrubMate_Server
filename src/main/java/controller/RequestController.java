@@ -2,6 +2,7 @@ package controller;
 
 import dataClass.Post;
 import dataClass.Request;
+import model.RequestTableInteract;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,7 +15,7 @@ public class RequestController {
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public Request post(@PathVariable("id") Integer id, @RequestBody Request req){
-        System.out.println("post"+id);
+        RequestTableInteract.addRequest(req);
         return req;
     }
 

@@ -21,6 +21,7 @@ public class GroupController {
     public GroupFeed get(@PathVariable("id") Integer uid){
         System.out.println(uid);
         GroupFeed feed = new GroupFeed();
+        feed.id = uid;
         User user = UserTableInteract.getUser(uid);
         if (user!=null) {
             ArrayList<Integer> groups = user.groupID;

@@ -12,23 +12,20 @@ import dataClass.Subscription;
 import dataClass.User;
 
 public class SubscriptionTableInteract {
-    static public BasicDBObject addSubscription(String subInfo)
+    static public BasicDBObject addSubscription(Subscription sub)
     {
+        String subInfo = new Gson().toJson(sub);
         BasicDBObject obj = (BasicDBObject) JSON.parse(subInfo);
 
-        System.out.println("Entering addGroupInfo");
 
-        //int newID = SharedObject.mi.incrementTargetID("groupinfoID");
 
         int newID = IDCounter.incrementTargetID(IDCounter.SUBSCRIPTION);
 
         obj.append(Subscription.SUBSCRIPTION_ID, newID);
-        SharedObject.mi.groupInfoTable.insert(obj);
-        System.out.println("THIS IS TOSTRING        " + obj.get("groupOwnerID") );
-        System.out.println("a new group with ID: " + obj.get(Subscription.SUBSCRIPTION_ID));
+        SharedObject.mi.subscriptionTable.insert(obj);
 
         BasicDBObject targetUser = new BasicDBObject(User.USER_ID, obj.get(Subscription.SUBSCRIBER_ID));
-        System.out.println("This is the query " + targetUser);
+
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(targetUser);
 
 
@@ -82,18 +79,18 @@ public class SubscriptionTableInteract {
     public static void main(String [] args)
     {
         SubscriptionTableInteract sti = new SubscriptionTableInteract();
-        UserTableInteract uti = new UserTableInteract();
-
-        Subscription s = new Subscription();
-        s.subscriberID = 7;
-        s.isActive = false;
-
-        String st = new Gson().toJson(s);
-
-        sti.addSubscription(st);
+//        UserTableInteract uti = new UserTableInteract();
+//
+//        Subscription s = new Subscription();
+//        s.subscriberID = 7;
+//        s.isActive = false;
+//
+//        String st = new Gson().toJson(s);
+//
+//        //sti.addSubscription();
 
         sti.printSubTable();
-        uti.printUserTable();
+        //uti.printUserTable();
 
 
 
