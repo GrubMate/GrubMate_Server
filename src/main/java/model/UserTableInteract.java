@@ -99,13 +99,23 @@ public class UserTableInteract {
     public static Integer getUserIDFromFBID(String fbid)
     {
         BasicDBObject query = new BasicDBObject(User.FACEBOOK_ID, fbid);
-
+        
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(query);
-
-        BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
-
-        Integer id = (Integer) answer.get(User.USER_ID);
-
+        
+        
+        Integer id;
+        if(SharedObject.mi.userCursor.hasNext())
+        {
+            BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
+            id = (Integer) answer.get(User.USER_ID);
+            
+        }
+        else
+        {
+            id = null;
+        }
+        
+        
         return id;
     }
 

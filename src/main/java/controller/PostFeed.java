@@ -2,8 +2,10 @@ package controller;
 
 import dataClass.Post;
 
+import java.util.ArrayList;
+
 public class PostFeed {
     public Integer id;
-    public Post[] itemList;
+    public ArrayList<Post> itemList;
 }
 

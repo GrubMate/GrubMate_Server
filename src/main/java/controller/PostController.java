@@ -16,8 +16,7 @@ public class PostController {
         System.out.println("get all visible user id: "+uid);
         PostFeed feed = new PostFeed();
         feed.id = uid;
-        Post[] list  = PostTableInteract.getAllVisiblePosts(uid);
-        feed.itemList = list;
+        feed.itemList = PostTableInteract.getAllVisiblePosts(uid);
         return feed;
     }
     public Post get(@PathVariable("id") Integer id, @RequestParam("postID")Integer pid){
