@@ -134,20 +134,9 @@ public class PostTableInteract {
     {
         ArrayList<Post> result = new ArrayList<>();
         User user  = UserTableInteract.getUser(userID);
-        Group allFriends = new Group();
-        //find all friends of this user
 
-        for(int groupID : user.groupID)
-        {
-            Group group = GroupInfoTableInteract.getGroupInfo(groupID);
-            if(group.allFriendFlag)
-            {
-                allFriends = group;
-                break;
-            }
-        }
         //go though each of his frineds
-        for(int friendID : allFriends.memberIDs)
+        for(int friendID : user.allFriends)
         {
             User friend = UserTableInteract.getUser(friendID);
             //check every post of his frineds
@@ -156,12 +145,17 @@ public class PostTableInteract {
                 Post post = PostTableInteract.getPost(postID);
                 if(post.isActive)
                 {
-                    for(int groupID:post.groupIDs)
+                    if(post.groupIDs.size()==0)
                     {
-                        Group visibleGroup = GroupInfoTableInteract.getGroupInfo(groupID);
-                        if(visibleGroup.hasUser(user.userID))
-                        {
-                            result.add(post);
+                        result.add(post);
+                    }
+                    else
+                    {
+                        for (int groupID : post.groupIDs) {
+                            Group visibleGroup = GroupInfoTableInteract.getGroupInfo(groupID);
+                            if (visibleGroup.hasUser(user.userID)) {
+                                result.add(post);
+                            }
                         }
                     }
                 }
