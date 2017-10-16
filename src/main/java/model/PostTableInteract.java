@@ -245,6 +245,17 @@ public class PostTableInteract {
 
     }
 
+    public ArrayList<Post> getUserPosts(int userID)
+    {
+        ArrayList<Post> result = new ArrayList<>();
+        User user = UserTableInteract.getUser(userID);
+        for(int postID : user.postsID)
+        {
+            result.add(getPost(postID));
+        }
+        return result;
+    }
+
     public void clearPostTable()
     {
         SharedObject.mi.postTable.drop();
@@ -259,6 +270,7 @@ public class PostTableInteract {
             System.out.println(obj);
         }
     }
+
 
     public static void main(String [] args)
     {

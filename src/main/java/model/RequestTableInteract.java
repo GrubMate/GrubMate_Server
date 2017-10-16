@@ -10,6 +10,8 @@ import dataClass.Post;
 import dataClass.Request;
 import dataClass.User;
 
+import java.util.ArrayList;
+
 public class RequestTableInteract {
 
     public static BasicDBObject addRequest(Request request)
@@ -70,6 +72,18 @@ public class RequestTableInteract {
 
         return u;
     }
+
+    public ArrayList<Request> getUserRequests(int userID)
+    {
+        ArrayList<Request> result = new ArrayList<>();
+        User user = UserTableInteract.getUser(userID);
+        for(int requestID : user.requestsID)
+        {
+            result.add(getRequest(requestID));
+        }
+        return result;
+    }
+
 
     public static void deleteRequest(int id)
     {
