@@ -55,15 +55,6 @@ public class SubscriptionTableInteract {
         updateObj.put("$set", newDocument);
 
         SharedObject.mi.userTable.update(query, updateObj);
-        /*
-        Fill in here to search all matched posts
-        and fill these posts into this new subscription.
-
-
-
-
-
-         */
 
 
 
