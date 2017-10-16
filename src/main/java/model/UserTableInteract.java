@@ -176,31 +176,31 @@ public class UserTableInteract {
         //SharedObject.createDBObject();
         UserTableInteract uti = new UserTableInteract();
 
-        uti.printUserTable();
-
-        //uti.clearUserTable();
+//        uti.printUserTable();
 //
-        User any = new User();
-        //any.userID = 14;
-        //any.userName = "Jie Ji";
-        any.facebookID = "daqiqiqiqiqiqi";
-        //any.profilePhoto = "https:dadada.dadda.com";
-        //any.bio = "This user bad!";
+//        //uti.clearUserTable();
+////
+//        User any = new User();
+//        //any.userID = 14;
+//        //any.userName = "Jie Ji";
+//        any.facebookID = "daqiqiqiqiqiqi";
+//        //any.profilePhoto = "https:dadada.dadda.com";
+//        //any.bio = "This user bad!";
+//
+//        String[] a = {"c", "sa", "sadad", "dadadadadwwe", "qquququuq"};
+//
+//        any.friendList = a;
 
-        String[] a = {"c", "sa", "sadad", "dadadadadwwe", "qquququuq"};
-
-        any.friendList = a;
 
 
-
-        uti.addUser(any);
+       // uti.addUser(any);
 //
 //        String s = new Gson().toJson(any);
 //        uti.updateUser(s);
 ////        BasicDBObject bo = new BasicDBObject();
 ////        bo = mi.getUser(123321);
 ////        System.out.println(bo);
-
+        //uti.clearUserTable();
         uti.printUserTable();
         //System.out.println(getUserIDFromFBID("1852883008374531"));
     }

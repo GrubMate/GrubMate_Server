@@ -8,7 +8,7 @@ public class Subscription {
     public ArrayList<String> tags;
     public String category;
     public String query;
-    public Integer[] timePeriod;
+    public String timePeriod;
     public ArrayList<Integer> matchedPostIDs;
     public Boolean[] allergyInfo;
     public Boolean isActive;

@@ -115,6 +115,8 @@ public class RequestTableInteract {
 
         PostTableInteract pti = new PostTableInteract();
 
+        rti.printRequestTable();
+
 //        pti.printPostTable();
 //        uti.printUserTable();
 //

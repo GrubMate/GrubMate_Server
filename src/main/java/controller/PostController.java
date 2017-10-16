@@ -22,10 +22,18 @@ public class PostController {
         System.out.println(new Gson().toJson(feed.itemList));
         return feed;
     }
-    public Post get(@PathVariable("id") Integer id, @RequestParam("postID")Integer pid){
-        //PostTableInteract.
-        return new Post();
+    @RequestMapping(value="/{id}/{me}",method= RequestMethod.GET)
+    public PostFeed get2(@PathVariable("id") Integer uid, @PathVariable("me") Boolean me){
+
+        System.out.println("get all my user id: "+uid);
+        PostFeed feed = new PostFeed();
+        feed.id = uid;
+        feed.itemList = PostTableInteract.getUserPosts(uid);
+        System.out.println("returning");
+        System.out.println(new Gson().toJson(feed.itemList));
+        return feed;
     }
+
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public Post post(@PathVariable("id") Integer id, @RequestBody Post post){

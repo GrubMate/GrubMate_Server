@@ -127,7 +127,7 @@ public class PostTableInteract {
         return result;
     }
 
-    public ArrayList<Post> searchPost(SearchRequest searchRequest)
+    public static ArrayList<Post> searchPost(SearchRequest searchRequest)
     {
         ArrayList<Post> result = new ArrayList<>();
         ArrayList<Post> postPools = getAllVisiblePosts(searchRequest.userID);
@@ -192,7 +192,7 @@ public class PostTableInteract {
     }
 
 
-    public void deletePost(int id)
+    public static void deletePost(int id)
     {
         BasicDBObject target = new BasicDBObject();
         target.put(Post.POST_ID, id);
@@ -252,12 +252,13 @@ public class PostTableInteract {
 
     }
 
-    public ArrayList<Post> getUserPosts(int userID)
+    public static  ArrayList<Post> getUserPosts(int userID)
     {
         ArrayList<Post> result = new ArrayList<>();
         User user = UserTableInteract.getUser(userID);
         for(int postID : user.postsID)
         {
+            System.out.println("post id" + postID);
             result.add(getPost(postID));
         }
         return result;
@@ -288,6 +289,7 @@ public class PostTableInteract {
         pti.printPostTable();
 
 
+<<<<<<< Updated upstream
 //        User u = new User();
 //        u.userID = 18;
 //        u.facebookID = "dadoooo";
@@ -305,6 +307,9 @@ public class PostTableInteract {
 //        PostTableInteract.addPost(p);
 
         pti.deletePost(68);
+=======
+        //pti.clearPostTable();
+>>>>>>> Stashed changes
 
         uti.printUserTable();
         pti.printPostTable();
