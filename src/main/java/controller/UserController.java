@@ -12,8 +12,13 @@ import java.util.ArrayList;
 public class UserController {
     @RequestMapping(method= RequestMethod.GET)
     public User get(@RequestParam("userID") Integer uid){
-        System.out.println(" get" + uid);
-        return new User();
+        System.out.println(uid);
+        return UserTableInteract.getUser(uid);
+    }
+    @RequestMapping(value="/{userID}",method= RequestMethod.GET)
+    public User get2(@PathVariable("userID") Integer uid){
+        System.out.println(uid);
+        return UserTableInteract.getUser(uid);
     }
 
     @RequestMapping(method=RequestMethod.POST)
