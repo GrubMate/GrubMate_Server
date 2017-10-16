@@ -1,6 +1,7 @@
 package controller;
 
 
+import com.google.gson.Gson;
 import model.PostTableInteract;
 import org.springframework.web.bind.annotation.*;
 import dataClass.Post;
@@ -17,6 +18,8 @@ public class PostController {
         PostFeed feed = new PostFeed();
         feed.id = uid;
         feed.itemList = PostTableInteract.getAllVisiblePosts(uid);
+        System.out.println("returning");
+        System.out.println(new Gson().toJson(feed.itemList));
         return feed;
     }
     public Post get(@PathVariable("id") Integer id, @RequestParam("postID")Integer pid){

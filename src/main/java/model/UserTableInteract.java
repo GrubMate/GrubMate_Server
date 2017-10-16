@@ -38,6 +38,7 @@ public class UserTableInteract {
             u.userID = newID;
             //updateUser(u);
             onlyUpdateUserFriendlist(u);
+            onlyUpdateAllFriends(u);
 
             System.out.println("user " + user.get(User.USER_ID) + " logs in");
 
@@ -68,6 +69,24 @@ public class UserTableInteract {
         BasicDBObject newDocument = new BasicDBObject();
         newDocument.put(User.USER_ID, updatedUserObj.get(User.USER_ID));
         newDocument.put(User.FRIEND_LIST, updatedUserObj.get(User.FRIEND_LIST));
+
+        BasicDBObject updateObj = new BasicDBObject();
+        updateObj.put("$set", newDocument);
+
+        SharedObject.mi.userTable.update(query, updateObj);
+    }
+
+    public static void onlyUpdateAllFriends(User u)
+    {
+        String updatedUserObjJson = new Gson().toJson(u);
+        BasicDBObject updatedUserObj = (BasicDBObject) JSON.parse(updatedUserObjJson);
+
+        BasicDBObject query = new BasicDBObject();
+        query.put(User.USER_ID, updatedUserObj.get(User.USER_ID));
+
+        BasicDBObject newDocument = new BasicDBObject();
+        newDocument.put(User.USER_ID, updatedUserObj.get(User.USER_ID));
+        newDocument.put(User.ALL_FRIENDS, updatedUserObj.get(User.ALL_FRIENDS));
 
         BasicDBObject updateObj = new BasicDBObject();
         updateObj.put("$set", newDocument);

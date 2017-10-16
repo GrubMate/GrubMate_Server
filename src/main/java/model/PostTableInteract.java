@@ -144,9 +144,11 @@ public class PostTableInteract {
             for(int postID : friend.postsID)
             {
                 Post post = PostTableInteract.getPost(postID);
+                String pp = new Gson().toJson(post);
+                System.out.println(pp);
                 if(post.isActive)
                 {
-                    if(post.groupIDs.size()==0)
+                    if(post.groupIDs==null || post.groupIDs.get(0)==null)
                     {
                         result.add(post);
                     }
