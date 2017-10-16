@@ -39,12 +39,6 @@ public class UserTableInteract {
             newID = IDCounter.incrementTargetID(IDCounter.USER);
             obj.append(User.USER_ID, newID);
             SharedObject.mi.userTable.insert(obj);
-
-
-            //get
-
-
-
             System.out.println("a new user with ID: " + obj.get(User.USER_ID));
 
         }
@@ -140,7 +134,7 @@ public class UserTableInteract {
 ////        System.out.println(bo);
 
         uti.printUserTable();
-        System.out.println(getUserIDFromFBID(12));
+       // System.out.println(getUserIDFromFBID(12));
     }
 
 
