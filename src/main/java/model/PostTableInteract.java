@@ -11,6 +11,7 @@ import dataClass.Group;
 import dataClass.Post;
 import dataClass.SearchRequest;
 import dataClass.User;
+import javafx.geometry.Pos;
 import org.springframework.boot.json.GsonJsonParser;
 
 import java.util.ArrayList;
@@ -19,49 +20,6 @@ import java.util.List;
 
 public class PostTableInteract {
 
-//    static public BasicDBObject addPost(Post post)
-//    {
-//        System.out.println("Entering addUser");
-//        BasicDBObject newPost = new BasicDBObject();
-//
-//        int newID = SharedObject.mi.incrementTargetID("postID");
-//
-//        newPost.put(Post.POST_ID, newID);
-//        newPost.put(Post.POSTER_ID, post.posterID);
-//
-//
-//
-////        BasicDBList allergy = new BasicDBList();
-////        allergy.add(new BasicDBObject().append("allergy1", true).append("allergy2", false)    );
-////        user.put("allergy", allergy);
-//
-//        newPost.put(Post.TITLE, post.title);
-//        newPost.put(Post.IS_HOMEMADE, post.isHomeMade);
-//        newPost.put(Post.GROUP_IDS, post.groupIDs);
-//
-//        newPost.put(Post.POST_PHOTOS, post.postPhotos);
-//
-//        newPost.put(Post.TAGS, post.tags);
-//        newPost.put(Post.CATEGORY, post.category);
-//        newPost.put(Post.TIME_PERIOD, post.timePeriod);
-//        newPost.put(Post.DESCRIPTION, post.description);
-//        newPost.put(Post.ADDRESS, post.address);
-//        newPost.put(Post.TOTAL_QUANTITY, post.totalQuantity);
-//        newPost.put(Post.LEFT_QUANTITY, post.leftQuantity);
-//        newPost.put(Post.REQUESTS_IDS, post.requestsIDs);
-//        newPost.put(Post.IS_ACTIVE, post.isActive);
-//        newPost.put(Post.ALLERGY_INFO, post.allergyInfo);
-//
-//
-//
-//
-//
-//        SharedObject.mi.postTable.insert(newPost);
-//
-//        System.out.println("a new user with ID: " + post.postID + " is added by " + post.posterID);
-//
-//        return newPost;
-//    }
     public static BasicDBObject addPost(Post post)
     {
         return addPost(new Gson().toJson(post));
@@ -87,6 +45,7 @@ public class PostTableInteract {
         BasicDBObject targetUser = new BasicDBObject(User.USER_ID, obj.get(Post.POSTER_ID));
         System.out.println("This is the query " + targetUser);
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(targetUser);
+
 
 
         BasicDBObject getTheAdder = (BasicDBObject) SharedObject.mi.userCursor.next();
@@ -237,6 +196,54 @@ public class PostTableInteract {
     {
         BasicDBObject target = new BasicDBObject();
         target.put(Post.POST_ID, id);
+
+        Post p = getPost(id);
+        String s = new Gson().toJson(p);
+        BasicDBObject obj = (BasicDBObject) JSON.parse(s);
+
+
+        Integer posterID = (Integer)obj.get(Post.POSTER_ID);
+        System.out.println("poster id is "+ p.posterID);
+
+        User targetU = UserTableInteract.getUser(posterID);
+        System.out.println(targetU.postsID);
+        ArrayList<Integer> postList = targetU.postsID;
+        System.out.println( postList.toString() );
+
+        if (targetU.postsID == null)
+        {
+            System.out.println("Error. No posts list!!!");
+            return;
+        }
+        else
+        {
+
+
+
+
+            for(int i = 0; i < targetU.postsID.size(); i++)
+            {
+                if((Integer)targetU.postsID.get(i) == id)
+                {
+                    targetU.postsID.remove((Integer)targetU.postsID.get(i));
+                }
+            }
+
+            for(int i = 0; i < targetU.postsID.size(); i++)
+            {
+                System.out.println(targetU.postsID.get(i));
+
+            }
+
+        }
+
+
+
+        String ss = new Gson().toJson(targetU);
+        UserTableInteract.updateUser(ss);
+
+
+
         SharedObject.mi.postTable.remove(target);
 
 //        BasicDBObject toDelete = getPost(post);
@@ -274,14 +281,32 @@ public class PostTableInteract {
 
     public static void main(String [] args)
     {
-        //SharedObject.createDBObject();
         PostTableInteract pti = new PostTableInteract();
-        //UserTableInteract uti = new UserTableInteract();
+        UserTableInteract uti = new UserTableInteract();
+
+        uti.printUserTable();
+        pti.printPostTable();
 
 
+//        User u = new User();
+//        u.userID = 18;
+//        u.facebookID = "dadoooo";
+//        ArrayList<Integer> a = new ArrayList<Integer>();
+//        a.add(67);
+//        a.add(68);
+//        a.add(69);
+//        a.add(70);
+//        a.add(71);
+//        u.postsID = a;
+//        UserTableInteract.updateUser(u);
 
+//        Post p = new Post();
+//        p.posterID = 18;
+//        PostTableInteract.addPost(p);
 
+        pti.deletePost(68);
 
+        uti.printUserTable();
         pti.printPostTable();
 
 
