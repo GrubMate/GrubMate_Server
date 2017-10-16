@@ -1,20 +1,22 @@
 package dataClass;
 
+import java.util.ArrayList;
+
 public class Post {
     public Integer postID;
     public Integer posterID;
     public String title;
     public Boolean isHomeMade;
-    public Integer[] groupIDs;
-    public String[] postPhotos;
-    public String[] tags;
+    public ArrayList<Integer> groupIDs;
+    public ArrayList<String> postPhotos;
+    public ArrayList<String> tags;
     public String category;
-    public String[] timePeriod;
+    public ArrayList<String> timePeriod;
     public String description;
-    public Double[] address;
+    public ArrayList<String> address;
     public Integer totalQuantity;
     public Integer leftQuantity;
-    public Integer[] requestsIDs;
+    public ArrayList<String> requestsIDs;
     public Boolean isActive;
     public Boolean[] allergyInfo;
 
@@ -34,4 +36,5 @@ public class Post {
     public final static String REQUESTS_IDS = "requestsIDs";
     public final static String IS_ACTIVE = "isActive";
     public final static String ALLERGY_INFO = "allergyInfo";
+
 }

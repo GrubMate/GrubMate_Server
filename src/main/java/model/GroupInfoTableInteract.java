@@ -10,6 +10,9 @@ import dataClass.Group;
 import dataClass.Post;
 import dataClass.User;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class GroupInfoTableInteract {
 
     static public BasicDBObject addGroupinfo(String groupInfo)
@@ -133,7 +136,7 @@ public class GroupInfoTableInteract {
         g.groupOwnerID = 7;
 
         Integer[] i = new Integer[] {2313, 292929 , 42, 32};
-        g.memberIDs = i;
+        g.memberIDs = new ArrayList<Integer>(Arrays.asList(i));
 
         Gson gson = new Gson();
         String s = gson.toJson(g);
@@ -152,7 +155,7 @@ public class GroupInfoTableInteract {
         gg.groupOwnerID = 7;
 
         Integer[] ii = new Integer[] {2313, 292929 , 42, 32};
-        gg.memberIDs = ii;
+        gg.memberIDs = new ArrayList<Integer>(Arrays.asList(ii));
 
         Gson gso = new Gson();
         String ss = gso.toJson(gg);

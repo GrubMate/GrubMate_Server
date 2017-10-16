@@ -1,13 +1,15 @@
 package dataClass;
 
+import java.util.ArrayList;
+
 public class Subscription {
     public Integer subscriptionID;
     public Integer subscriberID;
-    public String[] tags;
+    public ArrayList<String> tags;
     public String category;
     public String query;
-    public String[] timePeriod;
-    public Integer[] matchedPostIDs;
+    public Integer[] timePeriod;
+    public ArrayList<Integer> matchedPostIDs;
     public Boolean[] allergyInfo;
     public Boolean isActive;
 
