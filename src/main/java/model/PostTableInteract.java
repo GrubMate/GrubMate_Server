@@ -9,6 +9,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import dataClass.Group;
 import dataClass.Post;
+import dataClass.SearchRequest;
 import dataClass.User;
 import org.springframework.boot.json.GsonJsonParser;
 
@@ -160,6 +161,20 @@ public class PostTableInteract {
                     }
                 }
 
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Post> searchPost(SearchRequest searchRequest)
+    {
+        ArrayList<Post> result = new ArrayList<>();
+        ArrayList<Post> postPools = getAllVisiblePosts(searchRequest.userID);
+        for(Post post : postPools)
+        {
+            if(searchRequest.match(post))
+            {
+                result.add(post);
             }
         }
         return result;

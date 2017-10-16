@@ -11,7 +11,7 @@ public class Post {
     public ArrayList<String> postPhotos;
     public ArrayList<String> tags;
     public String category;
-    public ArrayList<String> timePeriod;
+    public Integer[] timePeriod;
     public String description;
     public ArrayList<String> address;
     public Integer totalQuantity;

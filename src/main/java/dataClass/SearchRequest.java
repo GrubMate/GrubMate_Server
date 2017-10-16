@@ -4,14 +4,45 @@ import java.util.ArrayList;
 
 public class SearchRequest {
     public int userID;
-    public String title;
+    public String keyword;
     public String category;
-    public ArrayList<String> tags;
-    public int[] time;
-    public String description;
+    public Integer[] time;
+    public Boolean[] allergy;
 
     public boolean match(Post post)
     {
-        return true;
+        keyword = keyword.toLowerCase();
+        category = category.toLowerCase();
+        boolean keywordMatch = false;
+        if(post.title.toLowerCase().contains(keyword))
+        {
+            keywordMatch = true;
+        }
+        else
+        {
+            for(String tag : post.tags)
+            {
+                if(tag.toLowerCase().contains(keyword))
+                {
+                    keywordMatch = true;
+                    break;
+                }
+            }
+        }
+        boolean categoryMatch = (category=="") || category.equals(post.category.toLowerCase());
+        boolean timeMatch = time[0]<= post.timePeriod[0] && time[1]>=post.timePeriod[1];
+        boolean allergyMatch = true;
+        //TODO
+        /*
+        for(int i = 0; i < allergy.length;i++)
+        {
+            if(!allergy[i]&&post.allergyInfo[i])
+            {
+
+            }
+        }
+        */
+        return keywordMatch && categoryMatch && timeMatch && allergyMatch;
     }
+
 }
