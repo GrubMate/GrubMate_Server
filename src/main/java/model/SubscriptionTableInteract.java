@@ -88,11 +88,15 @@ public class SubscriptionTableInteract {
     {
         ArrayList<Subscription> result = new ArrayList<Subscription>();
         User user = UserTableInteract.getUser(userID);
+        if (user.subscriptionID == null) {
+            return result;
+        }
         for(int subID : user.subscriptionID)
         {
-            //System.out.println("post id" + postID);
+            System.out.println("sub id" + subID);
             result.add(getSubscription(subID));
         }
+        System.out.println(new Gson().toJson(result));
         return result;
     }
 

@@ -13,9 +13,12 @@ import java.util.ArrayList;
 @RequestMapping("/subscription")
 public class SubscriptionController {
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public ArrayList<Subscription> get(@PathVariable("id") Integer uid){
+    public SubscriptionFeed get(@PathVariable("id") Integer uid){
         System.out.println("sub get"+uid);
-        return SubscriptionTableInteract.getUserSubscriptions(uid);
+        SubscriptionFeed feed = new SubscriptionFeed();
+        feed.id = uid;
+        feed.itemList = SubscriptionTableInteract.getUserSubscriptions(uid);
+        return feed;
     }
 
     @RequestMapping(value="/{id}/{sid}",method= RequestMethod.GET)

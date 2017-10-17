@@ -9,15 +9,19 @@ import org.springframework.web.bind.annotation.*;
 public class NotificationController {
 
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public String get(@PathVariable("id") Integer id){
+    public Notification get(@PathVariable("id") Integer id){
         System.out.println("received notification request from" + id);
         if (NotificationManager.nm.getHandler(id)!=null) {
-            return "multi-login error";
+            Notification notification = new Notification();
+            notification.what = Notification.TEXT;
+            notification.message = "multi-login error";
+            return notification;
         }
         NotificationManager.nm.addHandler(id);
-        String notification = NotificationManager.nm.getHandler(id).waitForNotification();
+        Notification notification = NotificationManager.nm.getHandler(id).waitForNotification();
         NotificationManager.nm.deleteHandler(id);
-        return "your message is :" + notification;
+        System.out.println(id + "'s message is " + notification);
+        return notification;
     }
 
 }

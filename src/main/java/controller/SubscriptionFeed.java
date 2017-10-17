@@ -2,8 +2,10 @@ package controller;
 
 import dataClass.Subscription;
 
+import java.util.ArrayList;
+
 public class SubscriptionFeed {
     public Integer id;
-    public Subscription[] itemList;
+    public ArrayList<Subscription> itemList;
 }
 

@@ -2,9 +2,15 @@ package controller;
 
 
 import com.google.gson.Gson;
+import com.sun.tools.corba.se.idl.constExpr.Not;
+import dataClass.Request;
 import model.PostTableInteract;
+import model.RequestTableInteract;
+import model.UserTableInteract;
 import org.springframework.web.bind.annotation.*;
 import dataClass.Post;
+
+import javax.websocket.server.PathParam;
 
 
 @RestController
@@ -22,6 +28,7 @@ public class PostController {
         System.out.println(new Gson().toJson(feed.itemList));
         return feed;
     }
+
     @RequestMapping(value="/{id}/{me}",method= RequestMethod.GET)
     public PostFeed get2(@PathVariable("id") Integer uid, @PathVariable("me") Boolean me){
 
@@ -41,6 +48,17 @@ public class PostController {
         PostTableInteract.addPost(post);
         return post;
     }
+
+    @RequestMapping(value="/{id}/rid",method=RequestMethod.POST)
+    public void respondRequest(@PathVariable("id") Integer id, @PathVariable("rid") Integer rid, @PathParam("accept") Boolean accept){
+        Request req = RequestTableInteract.getRequest(rid);
+        req.status = accept ? "ACCEPTED" : "Denied";
+        Integer requesterID = req.requesterID;
+        Notification reqn = new Notification();
+        reqn.what = Notification.MY_REQUEST_IS_RESPONDED;
+        reqn.what = "User" + UserTableInteract.getUser(id).userName + (accept?"accepted": "denied" + "your request");
+        NotificationManager.nm.addNotification(requesterID,reqn);
+     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
     public String put(@PathVariable("id") Integer id, @RequestBody Post post){

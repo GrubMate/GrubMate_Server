@@ -39,7 +39,10 @@ public class RoutinaryEventHandler extends Thread{
                 now += post.posterID + ",";
             }
             if (before.equals(now)) {
-                //TODO send notification
+                Notification notification = new Notification();
+                notification.what = Notification.NEW_MATCH_FOR_SUBSCRIPTION;
+                notification.message = "Your subscription has a new match";
+                NotificationManager.nm.addNotification(sub.subscriberID,notification);
             }
             matches.put(subscriberID,now);
         }

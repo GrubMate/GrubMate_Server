@@ -73,11 +73,22 @@ public class RequestTableInteract {
         return u;
     }
 
-    public ArrayList<Request> getUserRequests(int userID)
+    public static ArrayList<Request> getUserRequests(int userID)
     {
         ArrayList<Request> result = new ArrayList<>();
         User user = UserTableInteract.getUser(userID);
         for(int requestID : user.requestsID)
+        {
+            result.add(getRequest(requestID));
+        }
+        return result;
+    }
+
+    public static ArrayList<Request> getPostRequests(int pid)
+    {
+        ArrayList<Request> result = new ArrayList<>();
+        Post post = PostTableInteract.getPost(pid);
+        for(int requestID : post.requestsIDs)
         {
             result.add(getRequest(requestID));
         }
