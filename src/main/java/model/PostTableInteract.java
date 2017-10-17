@@ -284,7 +284,7 @@ public class PostTableInteract {
     {
         PostTableInteract pti = new PostTableInteract();
 
-        
+
         pti.printPostTable();
 
 
