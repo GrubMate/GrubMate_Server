@@ -40,4 +40,10 @@ public class UserController {
         Integer userID = UserTableInteract.addUser(usr);
         return userID;
     }
+
+    @RequestMapping(value="/{userID}",method=RequestMethod.PUT)
+    public void put(@RequestBody User usr){
+        System.out.println("change user " + usr.userID);
+        UserTableInteract.updateUser(usr);
+    }
 }

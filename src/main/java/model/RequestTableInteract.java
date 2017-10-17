@@ -117,6 +117,22 @@ public class RequestTableInteract {
         }
     }
 
+    public static void updateRequest (Request request) {
+
+        BasicDBObject obj = (BasicDBObject) JSON.parse(new Gson().toJson(request));
+
+        BasicDBObject query = new BasicDBObject();
+        query.put(Request.REQUEST_ID, obj.get(Request.REQUEST_ID));
+
+
+
+        BasicDBObject updateObj = new BasicDBObject();
+        updateObj.put("$set", obj);
+
+
+        SharedObject.mi.requestTable.update(query, updateObj);
+    }
+
 
 
     public static void main(String [] args)

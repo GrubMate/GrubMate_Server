@@ -7,6 +7,8 @@ import model.RequestTableInteract;
 import model.UserTableInteract;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @RequestMapping("/request")
 public class RequestController {
@@ -26,6 +28,26 @@ public class RequestController {
         feed.id = uid;
         feed.itemList = RequestTableInteract.getPostRequests(pid);
         return feed;
+    }
+
+    @RequestMapping(value="/{id}/{rid}/{accept}",method=RequestMethod.GET)
+    public String respondRequest(@PathVariable("id") Integer id, @PathVariable("rid") Integer rid, @PathVariable("accept") Integer accept){
+        System.out.println(accept==1 ? "ACCEPTED" : "DENIED");
+        Request req = RequestTableInteract.getRequest(rid);
+        req.status = accept==1 ? "ACCEPTED" : "DENIED";
+        RequestTableInteract.updateRequest(req);
+        Post post = PostTableInteract.getPost(req.targetPostID);
+        post.leftQuantity -= 1;
+        if (post.leftQuantity <=0) {
+            post.isActive = false;
+        }
+        PostTableInteract.updatePost(post);
+        Integer requesterID = req.requesterID;
+        Notification reqn = new Notification();
+        reqn.what = Notification.MY_REQUEST_IS_RESPONDED;
+        reqn.what = "User" + UserTableInteract.getUser(id).userName + (accept==1?"accepted": "denied" + "your request");
+        NotificationManager.nm.addNotification(requesterID,reqn);
+        return "";
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import dataClass.Post;
 
 import javax.websocket.server.PathParam;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 @RestController
@@ -30,15 +32,32 @@ public class PostController {
     }
 
     @RequestMapping(value="/{id}/{me}",method= RequestMethod.GET)
-    public PostFeed get2(@PathVariable("id") Integer uid, @PathVariable("me") Boolean me){
-
+    public PostFeed get2(@PathVariable("id") Integer uid, @PathVariable("me") Boolean active){
         System.out.println("get all my user id: "+uid);
-        PostFeed feed = new PostFeed();
-        feed.id = uid;
-        feed.itemList = PostTableInteract.getUserPosts(uid);
-        System.out.println("returning");
-        System.out.println(new Gson().toJson(feed.itemList));
-        return feed;
+        if (active) {
+            PostFeed feed = new PostFeed();
+            feed.id = uid;
+            ArrayList<Post> posts = PostTableInteract.getUserPosts(uid);
+            for (Post p : posts) {
+                if (p.isActive) {
+                    feed.itemList.add(p);
+                }
+            }
+            System.out.println(new Gson().toJson(feed.itemList));
+            return feed;
+        }
+        else {
+            PostFeed feed = new PostFeed();
+            feed.id = uid;
+            ArrayList<Post> posts = PostTableInteract.getUserPosts(uid);
+            for (Post p : posts) {
+                if (!p.isActive) {
+                    feed.itemList.add(p);
+                }
+            }
+            System.out.println(new Gson().toJson(feed.itemList));
+            return feed;
+        }
     }
 
 
@@ -49,16 +68,7 @@ public class PostController {
         return post;
     }
 
-    @RequestMapping(value="/{id}/rid",method=RequestMethod.POST)
-    public void respondRequest(@PathVariable("id") Integer id, @PathVariable("rid") Integer rid, @PathParam("accept") Boolean accept){
-        Request req = RequestTableInteract.getRequest(rid);
-        req.status = accept ? "ACCEPTED" : "Denied";
-        Integer requesterID = req.requesterID;
-        Notification reqn = new Notification();
-        reqn.what = Notification.MY_REQUEST_IS_RESPONDED;
-        reqn.what = "User" + UserTableInteract.getUser(id).userName + (accept?"accepted": "denied" + "your request");
-        NotificationManager.nm.addNotification(requesterID,reqn);
-     }
+
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
     public String put(@PathVariable("id") Integer id, @RequestBody Post post){

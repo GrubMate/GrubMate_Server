@@ -284,6 +284,13 @@ public class PostTableInteract {
     {
         PostTableInteract pti = new PostTableInteract();
 
+<<<<<<< Updated upstream
+=======
+//        Post post = PostTableInteract.getPost(15);
+//        post.leftQuantity = 0;
+//        post.isActive = false;
+//        PostTableInteract.updatePost(post);
+>>>>>>> Stashed changes
         pti.printPostTable();
 
 
