@@ -289,28 +289,6 @@ public class PostTableInteract {
         pti.printPostTable();
 
 
-<<<<<<< Updated upstream
-//        User u = new User();
-//        u.userID = 18;
-//        u.facebookID = "dadoooo";
-//        ArrayList<Integer> a = new ArrayList<Integer>();
-//        a.add(67);
-//        a.add(68);
-//        a.add(69);
-//        a.add(70);
-//        a.add(71);
-//        u.postsID = a;
-//        UserTableInteract.updateUser(u);
-
-//        Post p = new Post();
-//        p.posterID = 18;
-//        PostTableInteract.addPost(p);
-
-        pti.deletePost(68);
-=======
-        //pti.clearPostTable();
->>>>>>> Stashed changes
-
         uti.printUserTable();
         pti.printPostTable();
 
