@@ -73,8 +73,9 @@ public class GroupInfoTableInteract {
     }
 
 
-    public static void updateGroupInfo(String updatedGroupInfo)
+    public static void updateGroupInfo(Group group)
     {
+        String updatedGroupInfo = new Gson().toJson(group);
         BasicDBObject obj = (BasicDBObject) JSON.parse(updatedGroupInfo);
 
         BasicDBObject query = new BasicDBObject();
@@ -125,7 +126,7 @@ public class GroupInfoTableInteract {
     public static void main(String [] args)
     {
         GroupInfoTableInteract giti = new GroupInfoTableInteract();
-
+        //giti.clearGroupInfoTable();
         giti.printGroupInfoTable();;
 
 

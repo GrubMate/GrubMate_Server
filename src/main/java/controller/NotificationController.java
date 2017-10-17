@@ -10,7 +10,7 @@ public class NotificationController {
 
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
     public String get(@PathVariable("id") Integer id){
-        System.out.print("received notification request from" + id);
+        System.out.println("received notification request from" + id);
         if (NotificationManager.nm.getHandler(id)!=null) {
             return "multi-login error";
         }

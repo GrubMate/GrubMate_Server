@@ -10,5 +10,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
         //SharedObject.createDBObject();
         NotificationManager.createNotificationManager();
+
     }
 }

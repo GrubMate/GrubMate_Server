@@ -84,6 +84,18 @@ public class SubscriptionTableInteract {
         return su;
     }
 
+    public static  ArrayList<Subscription> getUserSubscriptions(int userID)
+    {
+        ArrayList<Subscription> result = new ArrayList<Subscription>();
+        User user = UserTableInteract.getUser(userID);
+        for(int subID : user.subscriptionID)
+        {
+            //System.out.println("post id" + postID);
+            result.add(getSubscription(subID));
+        }
+        return result;
+    }
+
     public static void updateSubscription(Subscription s)
     {
         String sub = new Gson().toJson(s);
@@ -102,7 +114,7 @@ public class SubscriptionTableInteract {
     }
 
 
-    public void deleteSubscription(int id)
+    public static void deleteSubscription(int id)
     {
         BasicDBObject target = new BasicDBObject();
         target.put(Subscription.SUBSCRIPTION_ID, id);
@@ -168,30 +180,25 @@ public class SubscriptionTableInteract {
         }
     }
 
+    public static ArrayList<Subscription> getAllSubscriptions() {
+        DBCursor cursor = SharedObject.mi.subscriptionTable.find();
+        ArrayList<Subscription> ret = new ArrayList<Subscription>();
+        while (cursor.hasNext())
+        {
+            DBObject obj = cursor.next();
+            String str = JSON.serialize(obj);
+            Subscription s = new Gson().fromJson(str, Subscription.class);
+            ret.add(s);
+        }
+        return ret;
+    }
+
 
     public static void main(String [] args)
     {
         SubscriptionTableInteract sti = new SubscriptionTableInteract();
-        UserTableInteract uti = new UserTableInteract();
-        User u = new User();
-        ArrayList<Integer> subID = new ArrayList<Integer>();
-
-
-
-
-        Subscription s = new Subscription();
-        s.subscriberID = 18;
-        s.isActive = false;
-
-        String st = new Gson().toJson(s);
-
-        sti.addSubscription(st);
-
-
-        sti.deleteSubscription(5);
 
         sti.printSubTable();
-        uti.printUserTable();
 
 
 
