@@ -9,7 +9,7 @@ public class NotificationHandler extends Thread{
         this.nm = nm;
     }
 
-    public String waitForNotification() {
+    public Notification waitForNotification() {
         this.run();
         if (nm.qMap.get(receiverID)!=null && !nm.qMap.get(receiverID).isEmpty()) {
             return nm.qMap.get(receiverID).remove();
@@ -20,7 +20,7 @@ public class NotificationHandler extends Thread{
 
     public void run() {
         try{
-            int timeout = 10;
+            int timeout = 20;
             while (timeout > 0) {
                 if (nm.qMap.get(receiverID)!=null && !nm.qMap.get(receiverID).isEmpty()) {
                    break;

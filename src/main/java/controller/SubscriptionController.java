@@ -1,18 +1,38 @@
 package controller;
 
 import dataClass.Post;
+import dataClass.SearchRequest;
 import dataClass.Subscription;
 import model.PostTableInteract;
 import model.SubscriptionTableInteract;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/subscription")
 public class SubscriptionController {
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public String get(@PathVariable("id") Integer id){
-        System.out.println("sub get"+id);
-        return "get";
+    public SubscriptionFeed get(@PathVariable("id") Integer uid){
+        System.out.println("sub get"+uid);
+        SubscriptionFeed feed = new SubscriptionFeed();
+        feed.id = uid;
+        feed.itemList = SubscriptionTableInteract.getUserSubscriptions(uid);
+        return feed;
+    }
+
+    @RequestMapping(value="/{id}/{sid}",method= RequestMethod.GET)
+    public PostFeed getSubPost(@PathVariable("id") Integer uid, @PathVariable("sid") Integer sid){
+        Subscription sub = SubscriptionTableInteract.getSubscription(sid);
+        SearchRequest sr = new SearchRequest();
+        sr.category = sub.category;
+        sr.keyword = sub.query;
+        sr.allergy = sub.allergyInfo;
+        sr.userID = sub.subscriberID;
+        PostFeed feed = new PostFeed();
+        feed.id = uid;
+        feed.itemList = PostTableInteract.searchPost(sr);
+        return feed;
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
@@ -22,15 +42,10 @@ public class SubscriptionController {
         return sub;
     }
 
-    @RequestMapping(value="/{id}",method=RequestMethod.PUT)
-    public String put(@PathVariable("id") Integer id){
-        System.out.println("put"+id);
-        return "put";
-    }
 
     @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-    public String delete(@PathVariable("id") Integer id){
-        System.out.println("delete"+id);
-        return "delete";
+    public void delete(@PathVariable("id") Integer id, @RequestParam("subscriptionID") Integer sid){
+        System.out.println("delete sub"+id);
+        SubscriptionTableInteract.deleteSubscription(sid);
     }
 }

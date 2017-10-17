@@ -45,6 +45,7 @@ public class UserTableInteract {
         }
         else
         {
+            obj.append(User.POSTS_ID, new ArrayList<Integer>());
             newID = IDCounter.incrementTargetID(IDCounter.USER);
             obj.append(User.USER_ID, newID);
             SharedObject.mi.userTable.insert(obj);
@@ -201,6 +202,10 @@ public class UserTableInteract {
 ////        bo = mi.getUser(123321);
 ////        System.out.println(bo);
         //uti.clearUserTable();
+        User user = getUser(8);
+        user.postsID = new ArrayList<Integer>();
+        updateUser(user);
+
         uti.printUserTable();
         //System.out.println(getUserIDFromFBID("1852883008374531"));
     }

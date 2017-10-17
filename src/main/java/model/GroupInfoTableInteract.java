@@ -73,24 +73,23 @@ public class GroupInfoTableInteract {
     }
 
 
-    public static void updateGroupInfo(String updatedGroupInfo)
+    public static void updateGroupInfo(Group group)
     {
-        BasicDBObject obj = (BasicDBObject) JSON.parse(updatedGroupInfo);
+        String groupjs = new Gson().toJson(group);
+
+        BasicDBObject obj = (BasicDBObject) JSON.parse(groupjs);
 
         BasicDBObject query = new BasicDBObject();
         query.put(Group.GROUPID, obj.get(Group.GROUPID));
 
-        BasicDBObject newDocument = new BasicDBObject();
-        newDocument.put(Group.GROUPID, obj.get(Group.GROUPID));
-        newDocument.put(Group.GROUP_NAME, obj.get(Group.GROUP_NAME));
-        newDocument.put(Group.MEMBER_IDS, obj.get(Group.MEMBER_IDS));
-        newDocument.put(Group.ALL_FRIEND_FLAG, obj.get(Group.ALL_FRIEND_FLAG));
 
 
         BasicDBObject updateObj = new BasicDBObject();
-        updateObj.put("$set", newDocument);
+        updateObj.put("$set", obj);
+
 
         SharedObject.mi.groupInfoTable.update(query, updateObj);
+
     }
 
 
@@ -125,7 +124,7 @@ public class GroupInfoTableInteract {
     public static void main(String [] args)
     {
         GroupInfoTableInteract giti = new GroupInfoTableInteract();
-
+        //giti.clearGroupInfoTable();
         giti.printGroupInfoTable();;
 
 

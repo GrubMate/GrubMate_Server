@@ -32,29 +32,19 @@ public class GroupController {
                 }
             }
         }
-        //
-        Group g = new Group();
-        g.groupID = 123;
-        g.groupName = "sb";
-        g.memberIDs = new ArrayList<Integer>();
-        g.memberIDs.add(1);
-        g.memberIDs.add(2);
-        g.memberIDs.add(3);
-        feed.itemList.add(g);
-        //
         return feed;
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public Integer post(@PathVariable("id") Integer uid, @RequestBody Group group){
-        System.out.println("post feed" + uid);
+        System.out.println("post grou[" + uid);
         Integer gid = GroupInfoTableInteract.addGroupinfo(group);
         return gid;
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
     public void put(@PathVariable("id") Integer id, @RequestBody Group group){
-
+        GroupInfoTableInteract.updateGroupInfo(group);
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
