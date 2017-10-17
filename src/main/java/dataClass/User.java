@@ -19,6 +19,8 @@ public class User {
     public ArrayList<Integer> requestsID;
     public ArrayList<Integer> subscriptionID;
     public String[] friendList;
+    public ArrayList<String> commentsAsProvider;
+    public ArrayList<String> commentsAsConsumer;
 
     public final static String USER_ID = "userID";
     public final static String USER_NAME = "userName";
@@ -33,5 +35,7 @@ public class User {
     public final static String SUBSCRIPTION_ID = "subscriptionID";
     public final static String FRIEND_LIST = "friendlist";
     public final static String ALL_FRIENDS = "allFriends";
+    public final static String COMMENTS_AS_PROVIDER = "commentsAsProvider";
+    public final static String COMMENTS_AS_CONSUMER = "commentsAsConsumer";
 
 }

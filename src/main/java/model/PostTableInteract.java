@@ -283,13 +283,8 @@ public class PostTableInteract {
     public static void main(String [] args)
     {
         PostTableInteract pti = new PostTableInteract();
-        UserTableInteract uti = new UserTableInteract();
 
-        uti.printUserTable();
-        pti.printPostTable();
-
-
-        uti.printUserTable();
+        
         pti.printPostTable();
 
 

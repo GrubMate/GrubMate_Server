@@ -11,12 +11,12 @@ public class Post {
     public ArrayList<String> postPhotos;
     public ArrayList<String> tags;
     public String category;
-    public Integer[] timePeriod;
+    public String timePeriod;
     public String description;
-    public ArrayList<String> address;
+    public ArrayList<Double> address;
     public Integer totalQuantity;
     public Integer leftQuantity;
-    public ArrayList<String> requestsIDs;
+    public ArrayList<Integer> requestsIDs;
     public Boolean isActive;
     public Boolean[] allergyInfo;
 
