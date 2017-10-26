@@ -12,16 +12,16 @@ public class Notification {
     public static final int TEXT = 100;
 
 
-    public Integer requestID;
-    public Integer requesterID;
-    public Integer targetPostID;
-    public String requesterName;
-    public String status;
+    public Integer requestID = -1;
+    public Integer requesterID  = -1;
+    public Integer targetPostID = -1;
+    public String requesterName = "defualt";
+    public String status = "defualt";
     public ArrayList<Double> address;
-    public Integer postID;
-    public Integer posterID;
-    public String posterName;
-    public String title;
+    public Integer postID = -1;
+    public Integer posterID = -1;
+    public String posterName = "defualt";
+    public String title = "defualt";
 
     /*
         REQUEST should have

@@ -93,16 +93,19 @@ public class GroupInfoTableInteract {
     }
 
 
-    public static Group getGroupInfo(Integer groupInfoID)
-    {
+    public static Group getGroupInfo(Integer groupInfoID) {
         BasicDBObject query = new BasicDBObject(Group.GROUPID, groupInfoID);
-
         SharedObject.mi.groupInfoCursor = SharedObject.mi.groupInfoTable.find(query);
 
-        BasicDBObject answer = (BasicDBObject) SharedObject.mi.groupInfoCursor.next();
+        if (SharedObject.mi.groupInfoCursor.hasNext()) {
+            BasicDBObject answer = (BasicDBObject) SharedObject.mi.groupInfoCursor.next();
+            String s = JSON.serialize(answer);
+            return new Gson().fromJson(s,Group.class);
+        }
 
-        String s = JSON.serialize(answer);
-        return new Gson().fromJson(s,Group.class);
+
+        System.out.println("Trying to get non-existing user. returning null");
+        return null;
     }
 
     public void clearGroupInfoTable()

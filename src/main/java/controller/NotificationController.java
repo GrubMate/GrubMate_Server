@@ -14,7 +14,7 @@ public class NotificationController {
         if (NotificationManager.nm.getHandler(id)!=null) {
             Notification notification = new Notification();
             notification.type = Notification.TEXT;
-            return notification;
+            return null;
         }
         NotificationManager.nm.addHandler(id);
         Notification notification = NotificationManager.nm.getHandler(id).waitForNotification();

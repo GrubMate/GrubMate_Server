@@ -20,7 +20,7 @@ public class NotificationHandler extends Thread{
 
     public void run() {
         try{
-            int timeout = 20;
+            int timeout = 5;
             while (timeout > 0) {
                 if (nm.qMap.get(receiverID)!=null && !nm.qMap.get(receiverID).isEmpty()) {
                    break;

@@ -60,17 +60,19 @@ public class RequestTableInteract {
         return id;
     }
 
-    public static Request getRequest(int id)
-    {
+    public static Request getRequest(int id) {
         BasicDBObject query = new BasicDBObject(Request.REQUEST_ID, id);
         SharedObject.mi.requestCursor = SharedObject.mi.requestTable.find(query);
-        BasicDBObject result = (BasicDBObject)SharedObject.mi.requestCursor.next();
 
-        String s = new Gson().toJson(result);
+        if (SharedObject.mi.requestCursor.hasNext()) {
+            BasicDBObject result = (BasicDBObject)SharedObject.mi.requestCursor.next();
+            String s = new Gson().toJson(result);
+            Request u = new Gson().fromJson(s, Request.class);
+            return u;
+        }
 
-        Request u = new Gson().fromJson(s, Request.class);
-
-        return u;
+        System.out.println("Trying to get non-existing subscription. returning null");
+        return null;
     }
 
     public static ArrayList<Request> getUserRequests(int userID)

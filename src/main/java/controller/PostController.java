@@ -34,7 +34,7 @@ public class PostController {
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
     public PostFeed get(@PathVariable("id") Integer uid){
         System.out.println("get all visible user id: "+uid);
-        uid = 8;
+        //uid = 8;
         PostFeed feed = new PostFeed();
         feed.id = uid;
         feed.itemList = PostTableInteract.getAllVisiblePosts(uid);
@@ -101,9 +101,9 @@ public class PostController {
         }
         post.postPhotos = imageFileNames;
 
-        //todo change back
-        post.posterID =8;
-        uid = 8;
+//        //todo change back
+//        post.posterID =8;
+//        uid = 8;
 
         post.posterName = UserTableInteract.getUser(uid).userName;
 

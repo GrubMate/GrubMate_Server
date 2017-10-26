@@ -54,6 +54,7 @@ public class RequestController {
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public void post(@PathVariable("id") Integer id, @RequestBody Request req){
+        System.out.println("request ID " + id);
         int reqID = RequestTableInteract.addRequest(req);
         Integer toWhom = PostTableInteract.getPost(req.targetPostID).posterID;
         Notification notification = new Notification();

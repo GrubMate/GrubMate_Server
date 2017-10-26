@@ -44,7 +44,7 @@ public class SearchRequest {
             }
         }
         */
-        return keywordMatch && categoryMatch && timeMatch && allergyMatch;
+        return keywordMatch && categoryMatch && timeMatch && allergyMatch && post.isActive;
     }
 
 }

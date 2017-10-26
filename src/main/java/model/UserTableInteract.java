@@ -113,19 +113,19 @@ public class UserTableInteract {
 
     }
 
-    public static User getUser(Integer id)
-    {
+    public static User getUser(Integer id) {
         BasicDBObject query = new BasicDBObject("userID", id);
-
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(query);
 
-        BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
+        if (SharedObject.mi.userCursor.hasNext()) {
+            BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
+            String s = JSON.serialize(answer);
+            User u = new Gson().fromJson(s, User.class);
+            return u;
+        }
 
-        String s = JSON.serialize(answer);
-
-        User u = new Gson().fromJson(s, User.class);
-
-        return u;
+        System.out.println("Trying to get non-existing user. returning null");
+        return null;
     }
 
     public void clearUserTable()

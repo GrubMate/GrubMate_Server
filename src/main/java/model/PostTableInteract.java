@@ -43,7 +43,6 @@ public class PostTableInteract {
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(targetUser);
 
 
-
         BasicDBObject getTheAdder = (BasicDBObject) SharedObject.mi.userCursor.next();
 
 
@@ -71,19 +70,19 @@ public class PostTableInteract {
         return newID;
     }
 
-    public static Post getPost(Integer postID)
-    {
+    public static Post getPost(Integer postID) {
         BasicDBObject query = new BasicDBObject(Post.POST_ID, postID);
-
         SharedObject.mi.postCursor = SharedObject.mi.postTable.find(query);
 
-        BasicDBObject answer = (BasicDBObject) SharedObject.mi.postCursor.next();
+        if (SharedObject.mi.postCursor.hasNext()){
+            BasicDBObject answer = (BasicDBObject) SharedObject.mi.postCursor.next();
+            String s = JSON.serialize(answer);
+            Post p = new Gson().fromJson(s, Post.class);
+            return p;
+        }
 
-        String s = JSON.serialize(answer);
-
-        Post p = new Gson().fromJson(s, Post.class);
-
-        return p;
+        System.out.println("Trying to get non-existing post. returning null");
+        return null;
     }
 
     public static ArrayList<Post> getAllVisiblePosts(Integer userID)
@@ -285,7 +284,7 @@ public class PostTableInteract {
 //        post.leftQuantity = 0;
 //        post.isActive = false;
 //        PostTableInteract.updatePost(post);
-        pti.printPostTable();
+        //pti.printPostTable();
 
 
     }

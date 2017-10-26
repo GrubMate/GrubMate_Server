@@ -69,16 +69,17 @@ public class SubscriptionTableInteract {
     public static Subscription getSubscription(Integer subID)
     {
         BasicDBObject query = new BasicDBObject(Subscription.SUBSCRIPTION_ID, subID);
-
         SharedObject.mi.subscriptionCursor = SharedObject.mi.subscriptionTable.find(query);
 
-        BasicDBObject answer = (BasicDBObject) SharedObject.mi.subscriptionCursor.next();
+        if (SharedObject.mi.subscriptionCursor.hasNext()) {
+            BasicDBObject answer = (BasicDBObject) SharedObject.mi.subscriptionCursor.next();
+            String s = JSON.serialize(answer);
+            Subscription su = new Gson().fromJson(s, Subscription.class);
+            return su;
+        }
 
-        String s = JSON.serialize(answer);
-
-        Subscription su = new Gson().fromJson(s, Subscription.class);
-
-        return su;
+        System.out.println("Trying to get non-existing subscription. returning null");
+        return null;
     }
 
     public static  ArrayList<Subscription> getUserSubscriptions(int userID)
