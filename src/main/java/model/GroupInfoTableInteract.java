@@ -22,8 +22,6 @@ public class GroupInfoTableInteract {
 
         System.out.println("Entering addGroupInfo");
 
-        //int newID = SharedObject.mi.incrementTargetID("groupinfoID");
-
         int newID = IDCounter.incrementTargetID(IDCounter.GROUP_INFO);
 
         obj.append(Group.GROUPID, newID);
@@ -40,8 +38,6 @@ public class GroupInfoTableInteract {
 
 
         BasicDBObject getTheAdder = (BasicDBObject) SharedObject.mi.userCursor.next();
-
-
 
 
 
@@ -102,7 +98,6 @@ public class GroupInfoTableInteract {
             String s = JSON.serialize(answer);
             return new Gson().fromJson(s,Group.class);
         }
-
 
         System.out.println("Trying to get non-existing user. returning null");
         return null;

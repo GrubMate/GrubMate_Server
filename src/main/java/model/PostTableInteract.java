@@ -26,17 +26,12 @@ public class PostTableInteract {
     }
 
 
-    static public int addPost(String post)
-    {
-
+    static public int addPost(String post) {
         BasicDBObject obj = (BasicDBObject) JSON.parse(post);
-
-        //int newID = SharedObject.mi.incrementTargetID("postID");
 
         int newID = IDCounter.incrementTargetID(IDCounter.POST);
         obj.append(Post.POST_ID, newID);
         SharedObject.mi.postTable.insert(obj);
-
 
         BasicDBObject targetUser = new BasicDBObject(User.USER_ID, obj.get(Post.POSTER_ID));
 

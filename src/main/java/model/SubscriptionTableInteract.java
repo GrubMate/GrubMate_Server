@@ -21,12 +21,8 @@ public class SubscriptionTableInteract {
     }
 
 
-    public static BasicDBObject addSubscription(String subInfo)
-    {
+    public static BasicDBObject addSubscription(String subInfo) {
         BasicDBObject obj = (BasicDBObject) JSON.parse(subInfo);
-
-
-        //int newID = SharedObject.mi.incrementTargetID("groupinfoID");
 
         int newID = IDCounter.incrementTargetID(IDCounter.SUBSCRIPTION);
 
@@ -37,18 +33,14 @@ public class SubscriptionTableInteract {
         BasicDBObject targetUser = new BasicDBObject(User.USER_ID, obj.get(Subscription.SUBSCRIBER_ID));
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(targetUser);
 
-
         BasicDBObject getTheAdder = (BasicDBObject) SharedObject.mi.userCursor.next();
 
-
         BasicDBList list = (BasicDBList)getTheAdder.get(User.SUBSCRIPTION_ID);
-        if(list == null)
-        {
+        if(list == null) {
             list = new BasicDBList();
 
         }
         list.add(newID);
-
 
         BasicDBObject query = new BasicDBObject();
         query.put(User.USER_ID, obj.get(Subscription.SUBSCRIBER_ID));
@@ -61,7 +53,6 @@ public class SubscriptionTableInteract {
         updateObj.put("$set", newDocument);
 
         SharedObject.mi.userTable.update(query, updateObj);
-
 
         return obj;
     }
@@ -97,26 +88,21 @@ public class SubscriptionTableInteract {
         return result;
     }
 
-    public static void updateSubscription(Subscription s)
-    {
+    public static void updateSubscription(Subscription s) {
         String sub = new Gson().toJson(s);
         BasicDBObject obj = (BasicDBObject) JSON.parse(sub);
 
         BasicDBObject query = new BasicDBObject();
         query.put(Subscription.SUBSCRIPTION_ID, obj.get(Subscription.SUBSCRIPTION_ID));
 
-
-
         BasicDBObject updateObj = new BasicDBObject();
         updateObj.put("$set", obj);
-
 
         SharedObject.mi.subscriptionTable.update(query, updateObj);
     }
 
 
-    public static void deleteSubscription(int id)
-    {
+    public static void deleteSubscription(int id) {
         BasicDBObject target = new BasicDBObject();
         target.put(Subscription.SUBSCRIPTION_ID, id);
 
@@ -124,9 +110,7 @@ public class SubscriptionTableInteract {
         String s = new Gson().toJson(sub);
         BasicDBObject obj = (BasicDBObject) JSON.parse(s);
 
-
         Integer subscriberID = (Integer)obj.get(Subscription.SUBSCRIBER_ID);
-
 
         User targetU = UserTableInteract.getUser(subscriberID);
         System.out.println(targetU.subscriptionID);
@@ -155,14 +139,10 @@ public class SubscriptionTableInteract {
             }
         }
 
-
         String ss = new Gson().toJson(targetU);
         UserTableInteract.updateUser(ss);
 
-
-
         SharedObject.mi.subscriptionTable.remove(target);
-
     }
 
 
@@ -171,8 +151,7 @@ public class SubscriptionTableInteract {
         SharedObject.mi.subscriptionTable.drop();
     }
 
-    public void printSubTable()
-    {
+    public void printSubTable() {
         DBCursor cursor = SharedObject.mi.subscriptionTable.find();
         while (cursor.hasNext())
         {
@@ -184,8 +163,7 @@ public class SubscriptionTableInteract {
     public static ArrayList<Subscription> getAllSubscriptions() {
         DBCursor cursor = SharedObject.mi.subscriptionTable.find();
         ArrayList<Subscription> ret = new ArrayList<Subscription>();
-        while (cursor.hasNext())
-        {
+        while (cursor.hasNext()) {
             DBObject obj = cursor.next();
             String str = JSON.serialize(obj);
             Subscription s = new Gson().fromJson(str, Subscription.class);

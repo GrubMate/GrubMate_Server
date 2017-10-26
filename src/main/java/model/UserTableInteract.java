@@ -18,37 +18,24 @@ public class UserTableInteract {
         //and then convert this new json to BasicDBObject to interact with DB
         String usr = new Gson().toJson(u);
         BasicDBObject obj = (BasicDBObject) JSON.parse(usr);
-
-
-
-
         BasicDBObject checkFBid = new BasicDBObject(User.FACEBOOK_ID, obj.get(User.FACEBOOK_ID));
-
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(checkFBid);
 
         int newID;
-        if(SharedObject.mi.userCursor.hasNext())
-        {
+        if(SharedObject.mi.userCursor.hasNext()) {
             BasicDBObject user = (BasicDBObject)SharedObject.mi.userCursor.next();
             newID = (Integer)user.get(User.USER_ID);
-
-
             u.userID = newID;
-            //updateUser(u);
             onlyUpdateUserFriendlist(u);
             onlyUpdateAllFriends(u);
-
-
         }
-        else
-        {
+        else {
             obj.append(User.POSTS_ID, new ArrayList<Integer>());
             newID = IDCounter.incrementTargetID(IDCounter.USER);
             obj.append(User.USER_ID, newID);
             SharedObject.mi.userTable.insert(obj);
 
         }
-
 
         return newID;
     }
@@ -96,21 +83,13 @@ public class UserTableInteract {
     }
 
 
-    public static void updateUser(String user)
-    {
+    public static void updateUser(String user) {
         BasicDBObject obj = (BasicDBObject) JSON.parse(user);
-
         BasicDBObject query = new BasicDBObject();
         query.put(User.USER_ID, obj.get(User.USER_ID));
-
-
-
         BasicDBObject updateObj = new BasicDBObject();
         updateObj.put("$set", obj);
-
-
         SharedObject.mi.userTable.update(query, updateObj);
-
     }
 
     public static User getUser(Integer id) {
@@ -133,36 +112,28 @@ public class UserTableInteract {
         SharedObject.mi.userTable.drop();
     }
 
-    public static void printUserTable()
-    {
+    public static void printUserTable() {
         DBCursor cursor = SharedObject.mi.userTable.find();
-        while (cursor.hasNext())
-        {
+        while (cursor.hasNext()) {
             DBObject obj = cursor.next();
             System.out.println(obj);
         }
     }
 
 
-    public static Integer getUserIDFromFBID(String fbid)
-    {
+    public static Integer getUserIDFromFBID(String fbid) {
         BasicDBObject query = new BasicDBObject(User.FACEBOOK_ID, fbid);
-
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(query);
 
-
         Integer id;
-        if(SharedObject.mi.userCursor.hasNext())
-        {
+        if(SharedObject.mi.userCursor.hasNext()) {
             BasicDBObject answer = (BasicDBObject) SharedObject.mi.userCursor.next();
             id = (Integer) answer.get(User.USER_ID);
 
         }
-        else
-        {
+        else {
             id = null;
         }
-
 
         return id;
     }
