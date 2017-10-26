@@ -38,10 +38,10 @@ public class RoutinaryEventHandler extends Thread{
             for (Post post: results) {
                 now += post.posterID + ",";
             }
-            if (before.equals(now)) {
+            if (!before.equals(now)) {
                 Notification notification = new Notification();
-                notification.what = Notification.NEW_MATCH_FOR_SUBSCRIPTION;
-                notification.message = "Your subscription has a new match";
+                notification.type = Notification.MATCH;
+                //notification.title = PostTableInteract.getPost()
                 NotificationManager.nm.addNotification(sub.subscriberID,notification);
             }
             matches.put(subscriberID,now);

@@ -44,19 +44,25 @@ public class RequestController {
         PostTableInteract.updatePost(post);
         Integer requesterID = req.requesterID;
         Notification reqn = new Notification();
-        reqn.what = Notification.MY_REQUEST_IS_RESPONDED;
-        reqn.what = "User" + UserTableInteract.getUser(id).userName + (accept==1?"accepted": "denied" + "your request");
+        reqn.type = accept==1?Notification.ACCEPTED:Notification.DENIED;
+        reqn.title = PostTableInteract.getPost(req.targetPostID).title;
+        reqn.requesterID = requesterID;
+        reqn.posterID = PostTableInteract.getPost(req.targetPostID).posterID;
         NotificationManager.nm.addNotification(requesterID,reqn);
         return "";
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public void post(@PathVariable("id") Integer id, @RequestBody Request req){
-        RequestTableInteract.addRequest(req);
+        int reqID = RequestTableInteract.addRequest(req);
         Integer toWhom = PostTableInteract.getPost(req.targetPostID).posterID;
         Notification notification = new Notification();
-        notification.what = Notification.MY_POST_IS_REQUESTED;
-        notification.message = UserTableInteract.getUser(req.requesterID).userName + " requested you post";
+        notification.type = Notification.REQUEST;
+        notification.requestID = reqID;
+        notification.requesterID = req.requesterID;
+        notification.requesterName = UserTableInteract.getUser(req.requesterID).userName;
+        notification.title = PostTableInteract.getPost(req.targetPostID).title;
+        notification.address = PostTableInteract.getPost(req.targetPostID).address;
         NotificationManager.nm.addNotification(toWhom,notification);
     }
 

@@ -4,14 +4,25 @@ package controller;
 import com.google.gson.Gson;
 import com.sun.tools.corba.se.idl.constExpr.Not;
 import dataClass.Request;
+import dataClass.SearchRequest;
+import dataClass.Subscription;
 import model.PostTableInteract;
 import model.RequestTableInteract;
+import model.SubscriptionTableInteract;
 import model.UserTableInteract;
 import org.springframework.web.bind.annotation.*;
 import dataClass.Post;
+import sun.misc.BASE64Decoder;
 
+import javax.imageio.ImageIO;
 import javax.websocket.server.PathParam;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -23,6 +34,7 @@ public class PostController {
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
     public PostFeed get(@PathVariable("id") Integer uid){
         System.out.println("get all visible user id: "+uid);
+        uid = 8;
         PostFeed feed = new PostFeed();
         feed.id = uid;
         feed.itemList = PostTableInteract.getAllVisiblePosts(uid);
@@ -34,6 +46,7 @@ public class PostController {
     @RequestMapping(value="/{id}/{me}",method= RequestMethod.GET)
     public PostFeed get2(@PathVariable("id") Integer uid, @PathVariable("me") Boolean active){
         System.out.println("get all my user id: "+uid);
+        uid = 8;
         if (active) {
             PostFeed feed = new PostFeed();
             feed.id = uid;
@@ -62,9 +75,66 @@ public class PostController {
 
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
-    public Post post(@PathVariable("id") Integer id, @RequestBody Post post){
-        System.out.println("post"+id);
-        PostTableInteract.addPost(post);
+    public Post post(@PathVariable("id") Integer uid, @RequestBody Post post){
+        System.out.println("post"+uid);
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        timeStamp = timeStamp.replace(",","-");
+        int count = 0;
+        ArrayList<String> imageFileNames = new ArrayList<String>();
+        if (post.postPhotos != null) {
+            for (String imgstr : post.postPhotos) {
+                BufferedImage image = null;
+                byte[] imageByte;
+                BASE64Decoder decoder = new BASE64Decoder();
+                try {
+                    imageByte = decoder.decodeBuffer(imgstr);
+                    ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+                    image = ImageIO.read(bis);
+                    bis.close();
+                    File outputfile = new File(  "images" + timeStamp + "---" + Integer.toString(count++));
+                    ImageIO.write(image, "jpeg", outputfile);
+                    imageFileNames.add(timeStamp + "---" + Integer.toString(count++));
+                } catch (IOException e) {
+                    System.out.println("image io exception");
+                }
+            }
+        }
+        post.postPhotos = imageFileNames;
+
+        //todo change back
+        post.posterID =8;
+        uid = 8;
+
+        post.posterName = UserTableInteract.getUser(uid).userName;
+
+
+        ////
+        int postID = PostTableInteract.addPost(post);
+        ////
+
+        // this is for subscription
+        ArrayList<Subscription> subscriptions = SubscriptionTableInteract.getAllSubscriptions();
+        for (Subscription sub : subscriptions) {
+            SearchRequest sr = new SearchRequest();
+            sr.category = sub.category;
+            sr.keyword = sub.query;
+            sr.allergy = sub.allergyInfo;
+            sr.userID = sub.subscriberID;
+            ArrayList<Post> results = PostTableInteract.searchPost(sr);
+            for (Post p: results) {
+                if (p.posterID == postID) {
+                    Notification notification = new Notification();
+                    notification.type = Notification.MATCH;
+                    notification.title = p.title;
+                    notification.posterID = p.posterID;
+                    notification.posterName = UserTableInteract.getUser(p.posterID).userName;
+                    notification.postID = p.postID;
+                    NotificationManager.nm.addNotification(sub.subscriberID,notification);
+                }
+            }
+
+        }
+
         return post;
     }
 
@@ -73,6 +143,30 @@ public class PostController {
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
     public String put(@PathVariable("id") Integer id, @RequestBody Post post){
         System.out.println("edit post"+post.postID);
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        timeStamp = timeStamp.replace(",","-");
+        int count = 0;
+        ArrayList<String> imageFileNames = new ArrayList<String>();
+        if (post.postPhotos != null) {
+            for (String imgstr : post.postPhotos) {
+                BufferedImage image = null;
+                byte[] imageByte;
+                BASE64Decoder decoder = new BASE64Decoder();
+                try {
+                    imageByte = decoder.decodeBuffer(imgstr);
+                    ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+                    image = ImageIO.read(bis);
+                    bis.close();
+                    File outputfile = new File(  "images" + timeStamp + "---" + Integer.toString(count++));
+                    ImageIO.write(image, "jpeg", outputfile);
+                    imageFileNames.add(timeStamp + "---" + Integer.toString(count++));
+                    String s = ""; //no use just to suppress warning
+                } catch (IOException e) {
+                    System.out.println("image io exception");
+                }
+            }
+        }
+        post.postPhotos = imageFileNames;
         PostTableInteract.updatePost(post);
         return "put";
     }

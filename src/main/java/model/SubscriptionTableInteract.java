@@ -25,7 +25,6 @@ public class SubscriptionTableInteract {
     {
         BasicDBObject obj = (BasicDBObject) JSON.parse(subInfo);
 
-        System.out.println("Entering addGroupInfo");
 
         //int newID = SharedObject.mi.incrementTargetID("groupinfoID");
 
@@ -34,10 +33,8 @@ public class SubscriptionTableInteract {
         obj.append(Subscription.SUBSCRIPTION_ID, newID);
         SharedObject.mi.subscriptionTable.insert(obj);
 
-        System.out.println("a new sub with ID: " + obj.get(Subscription.SUBSCRIPTION_ID));
 
         BasicDBObject targetUser = new BasicDBObject(User.USER_ID, obj.get(Subscription.SUBSCRIBER_ID));
-        System.out.println("This is the query " + targetUser);
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(targetUser);
 
 
@@ -93,7 +90,6 @@ public class SubscriptionTableInteract {
         }
         for(int subID : user.subscriptionID)
         {
-            System.out.println("sub id" + subID);
             result.add(getSubscription(subID));
         }
         System.out.println(new Gson().toJson(result));
@@ -129,7 +125,7 @@ public class SubscriptionTableInteract {
 
 
         Integer subscriberID = (Integer)obj.get(Subscription.SUBSCRIBER_ID);
-        System.out.println("subber id is "+ sub.subscriberID);
+
 
         User targetU = UserTableInteract.getUser(subscriberID);
         System.out.println(targetU.subscriptionID);

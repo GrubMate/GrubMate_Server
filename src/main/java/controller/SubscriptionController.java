@@ -5,6 +5,7 @@ import dataClass.SearchRequest;
 import dataClass.Subscription;
 import model.PostTableInteract;
 import model.SubscriptionTableInteract;
+import model.UserTableInteract;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -40,6 +41,25 @@ public class SubscriptionController {
     public Subscription post(@PathVariable("id") Integer uid, @RequestBody Subscription sub){
         System.out.print("new sub" + uid);
         SubscriptionTableInteract.addSubscription(sub);
+
+        Integer subscriberID = sub.subscriberID;
+        SearchRequest sr = new SearchRequest();
+        sr.category = sub.category;
+        sr.keyword = sub.query;
+        sr.allergy = sub.allergyInfo;
+        sr.userID = sub.subscriberID;
+        ArrayList<Post> results = PostTableInteract.searchPost(sr);
+
+        for (Post p : results) {
+            Notification notification = new Notification();
+            notification.type = Notification.MATCH;
+            notification.title = p.title;
+            notification.posterID = p.posterID;
+            notification.posterName = UserTableInteract.getUser(p.posterID).userName;
+            notification.postID = p.postID;
+            NotificationManager.nm.addNotification(sub.subscriberID,notification);
+        }
+
         return sub;
     }
 

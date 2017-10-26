@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 public class RequestTableInteract {
 
-    public static BasicDBObject addRequest(Request request)
+    public static int addRequest(Request request)
     {
         return addRequest(new Gson().toJson(request));
     }
 
-    public static BasicDBObject addRequest(String requestJson)
+    public static int addRequest(String requestJson)
     {
         //insert request
         BasicDBObject request = (BasicDBObject) JSON.parse(requestJson);
@@ -57,7 +57,7 @@ public class RequestTableInteract {
 
         PostTableInteract.updatePost(post.toString());
 
-        return request;
+        return id;
     }
 
     public static Request getRequest(int id)

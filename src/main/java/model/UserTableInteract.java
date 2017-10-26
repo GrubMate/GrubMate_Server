@@ -20,7 +20,6 @@ public class UserTableInteract {
         BasicDBObject obj = (BasicDBObject) JSON.parse(usr);
 
 
-        System.out.println("Entering addUser");
 
 
         BasicDBObject checkFBid = new BasicDBObject(User.FACEBOOK_ID, obj.get(User.FACEBOOK_ID));
@@ -33,14 +32,12 @@ public class UserTableInteract {
             BasicDBObject user = (BasicDBObject)SharedObject.mi.userCursor.next();
             newID = (Integer)user.get(User.USER_ID);
 
-            System.out.println("User Found: "+ user.toString());
 
             u.userID = newID;
             //updateUser(u);
             onlyUpdateUserFriendlist(u);
             onlyUpdateAllFriends(u);
 
-            System.out.println("user " + user.get(User.USER_ID) + " logs in");
 
         }
         else
@@ -49,8 +46,6 @@ public class UserTableInteract {
             newID = IDCounter.incrementTargetID(IDCounter.USER);
             obj.append(User.USER_ID, newID);
             SharedObject.mi.userTable.insert(obj);
-
-            System.out.println("a new user with ID: " + obj.get(User.USER_ID));
 
         }
 

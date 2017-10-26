@@ -20,18 +20,16 @@ import java.util.List;
 
 public class PostTableInteract {
 
-    public static BasicDBObject addPost(Post post)
+    public static int addPost(Post post)
     {
         return addPost(new Gson().toJson(post));
     }
 
 
-    static public BasicDBObject addPost(String post)
+    static public int addPost(String post)
     {
 
         BasicDBObject obj = (BasicDBObject) JSON.parse(post);
-
-        System.out.println("Entering addUser");
 
         //int newID = SharedObject.mi.incrementTargetID("postID");
 
@@ -39,11 +37,9 @@ public class PostTableInteract {
         obj.append(Post.POST_ID, newID);
         SharedObject.mi.postTable.insert(obj);
 
-        System.out.println("a new post with ID: " + obj.get(Post.POST_ID) + " is added by " + obj.get(Post.POSTER_ID));
-
 
         BasicDBObject targetUser = new BasicDBObject(User.USER_ID, obj.get(Post.POSTER_ID));
-        System.out.println("This is the query " + targetUser);
+
         SharedObject.mi.userCursor = SharedObject.mi.userTable.find(targetUser);
 
 
@@ -72,7 +68,7 @@ public class PostTableInteract {
 
         SharedObject.mi.userTable.update(query, updateObj);
 
-        return obj;
+        return newID;
     }
 
     public static Post getPost(Integer postID)
@@ -284,13 +280,11 @@ public class PostTableInteract {
     {
         PostTableInteract pti = new PostTableInteract();
 
-<<<<<<< Updated upstream
-=======
-//        Post post = PostTableInteract.getPost(15);
+
+        Post post = PostTableInteract.getPost(100);
 //        post.leftQuantity = 0;
 //        post.isActive = false;
 //        PostTableInteract.updatePost(post);
->>>>>>> Stashed changes
         pti.printPostTable();
 
 

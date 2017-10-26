@@ -20,6 +20,8 @@ public class Post {
     public Boolean isActive;
     public Boolean[] allergyInfo;
 
+    public String posterName;
+
     public final static String POST_ID = "postID";
     public final static String POSTER_ID= "posterID";
     public final static String TITLE = "title";

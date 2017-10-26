@@ -13,8 +13,7 @@ public class NotificationController {
         System.out.println("received notification request from" + id);
         if (NotificationManager.nm.getHandler(id)!=null) {
             Notification notification = new Notification();
-            notification.what = Notification.TEXT;
-            notification.message = "multi-login error";
+            notification.type = Notification.TEXT;
             return notification;
         }
         NotificationManager.nm.addHandler(id);
