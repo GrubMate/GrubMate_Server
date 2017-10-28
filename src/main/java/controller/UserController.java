@@ -35,10 +35,21 @@ public class UserController {
             }
         }
         else {
-            System.out.println("no friends");
+            System.out.println("no friends") ;
         }
         Integer userID = UserTableInteract.addUser(usr);
         return userID;
+    }
+
+    @RequestMapping(value="/{uid}/{toWhom}/{rating}", method=RequestMethod.POST)
+    public String rate(@PathVariable("uid") Integer uid, @PathVariable("toWhom") Integer toWhom, @PathVariable("rating") Integer rating){
+        User user = UserTableInteract.getUser(toWhom);
+        if (user.numRatings == null) {
+            user.numRatings = new Integer(0);
+            user.rating = new Double(0);
+        }
+        user.rating = (user.rating * user.numRatings + rating) / (user.numRatings++);
+        return "success";
     }
 
     @RequestMapping(value="/{userID}",method=RequestMethod.PUT)

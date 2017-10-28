@@ -46,7 +46,6 @@ public class PostController {
     @RequestMapping(value="/{id}/{me}",method= RequestMethod.GET)
     public PostFeed get2(@PathVariable("id") Integer uid, @PathVariable("me") Boolean active){
         System.out.println("get all my user id: "+uid);
-        uid = 8;
         if (active) {
             PostFeed feed = new PostFeed();
             feed.id = uid;
@@ -91,7 +90,7 @@ public class PostController {
                     ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
                     image = ImageIO.read(bis);
                     bis.close();
-                    File outputfile = new File(  "images" + timeStamp + "---" + Integer.toString(count++));
+                    File outputfile = new File(  "images/" + timeStamp + "---" + Integer.toString(count++));
                     ImageIO.write(image, "jpeg", outputfile);
                     imageFileNames.add(timeStamp + "---" + Integer.toString(count++));
                 } catch (IOException e) {
@@ -101,10 +100,7 @@ public class PostController {
         }
         post.postPhotos = imageFileNames;
 
-//        //todo change back
-//        post.posterID =8;
-//        uid = 8;
-
+        System.out.println("uid" + uid);
         post.posterName = UserTableInteract.getUser(uid).userName;
 
 
@@ -138,6 +134,41 @@ public class PostController {
         return post;
     }
 
+    @RequestMapping(value="/{id}/{pid}", method=RequestMethod.POST)
+    public void confirm(@PathVariable("id") Integer uid, @PathVariable("id") Integer pid){
+        System.out.println("confirm post" + pid);
+        Post post  = PostTableInteract.getPost(pid);
+        post.isActive = false;
+        ArrayList<Integer> requestIDs = post.requestsIDs;
+        if (requestIDs != null) {
+            for (Integer rid : requestIDs) {
+                Request request = RequestTableInteract.getRequest(rid);
+                if (request.status != "ACCEPTED") {
+                    request.status = "DENIED";
+                }
+                else {
+                    Notification notification = new Notification();
+                    notification.type = Notification.RATING;
+                    notification.fromUserID = post.posterID;
+                    notification.fromUserName = UserTableInteract.getUser(post.posterID).userName;
+                    notification.toUserID = request.requesterID;
+                    notification.toUserName = UserTableInteract.getUser(request.requesterID).userName;
+                    notification.title = post.title;
+                    NotificationManager.nm.addNotification(notification.toUserID,notification);
+
+                    Notification notification2 = new Notification();
+                    notification2.type = Notification.RATING;
+                    notification2.toUserID = post.posterID;
+                    notification2.toUserName = UserTableInteract.getUser(post.posterID).userName;
+                    notification2.fromUserID = request.requesterID;
+                    notification2.fromUserName = UserTableInteract.getUser(request.requesterID).userName;
+                    notification2.title = post.title;
+                    NotificationManager.nm.addNotification(notification.toUserID,notification2);
+                }
+            }
+        }
+        PostTableInteract.updatePost(post);
+    }
 
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
@@ -157,7 +188,7 @@ public class PostController {
                     ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
                     image = ImageIO.read(bis);
                     bis.close();
-                    File outputfile = new File(  "images" + timeStamp + "---" + Integer.toString(count++));
+                    File outputfile = new File(  "images/" + timeStamp + "---" + Integer.toString(count++));
                     ImageIO.write(image, "jpeg", outputfile);
                     imageFileNames.add(timeStamp + "---" + Integer.toString(count++));
                     String s = ""; //no use just to suppress warning

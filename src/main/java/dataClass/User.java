@@ -11,7 +11,8 @@ public class User {
     public String facebookID;
     public String profilePhoto;
     public String bio;
-    public ArrayList<Integer> ratings;
+    public Integer numRatings;
+    public Double rating;
     public Boolean[] allergy;
     public ArrayList<Integer> allFriends ;
     public ArrayList<Integer> groupID;
@@ -21,6 +22,7 @@ public class User {
     public String[] friendList;
     public ArrayList<String> commentsAsProvider;
     public ArrayList<String> commentsAsConsumer;
+
 
     public final static String USER_ID = "userID";
     public final static String USER_NAME = "userName";

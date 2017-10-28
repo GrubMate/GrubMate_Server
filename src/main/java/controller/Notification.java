@@ -22,6 +22,13 @@ public class Notification {
     public Integer posterID = -1;
     public String posterName = "defualt";
     public String title = "defualt";
+    public Integer fromUserID = -1;
+    public String fromUserName = "defualt";
+    public Integer toUserID = -1;
+    public String toUserName = "defualt";
+    public Integer rating = -1;
+
+
 
     /*
         REQUEST should have

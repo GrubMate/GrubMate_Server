@@ -73,5 +73,9 @@ public class IDCounter {
     }
 
 
+    public static void main (String args[]) {
+        initializeCounters();
+    }
+
 
 }

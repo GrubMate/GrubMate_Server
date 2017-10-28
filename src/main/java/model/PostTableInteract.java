@@ -246,10 +246,13 @@ public class PostTableInteract {
     {
         ArrayList<Post> result = new ArrayList<>();
         User user = UserTableInteract.getUser(userID);
-        for(int postID : user.postsID)
-        {
-            System.out.println("post id" + postID);
-            result.add(getPost(postID));
+
+        if (user.postsID!= null) {
+            for(int postID : user.postsID)
+            {
+                System.out.println("post id" + postID);
+                result.add(getPost(postID));
+            }
         }
         return result;
     }
