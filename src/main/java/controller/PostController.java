@@ -34,7 +34,9 @@ public class PostController {
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
     public PostFeed get(@PathVariable("id") Integer uid){
         System.out.println("get all visible user id: "+uid);
-        //uid = 8;
+        if (UserTableInteract.getUser(uid) == null) {
+            return null;
+        }
         PostFeed feed = new PostFeed();
         feed.id = uid;
         feed.itemList = PostTableInteract.getAllVisiblePosts(uid);
@@ -51,6 +53,7 @@ public class PostController {
             feed.id = uid;
             ArrayList<Post> posts = PostTableInteract.getUserPosts(uid);
             for (Post p : posts) {
+                if (p.isActive == null) continue;
                 if (p.isActive) {
                     feed.itemList.add(p);
                 }
@@ -63,6 +66,7 @@ public class PostController {
             feed.id = uid;
             ArrayList<Post> posts = PostTableInteract.getUserPosts(uid);
             for (Post p : posts) {
+                if (p.isActive == null) continue;
                 if (!p.isActive) {
                     feed.itemList.add(p);
                 }
@@ -74,10 +78,10 @@ public class PostController {
 
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
-    public Post post(@PathVariable("id") Integer uid, @RequestBody Post post){
+    public Integer post(@PathVariable("id") Integer uid, @RequestBody Post post){
         System.out.println("post"+uid);
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        timeStamp = timeStamp.replace(",","-");
+        timeStamp = timeStamp.replace(".","-");
         int count = 0;
         ArrayList<String> imageFileNames = new ArrayList<String>();
         if (post.postPhotos != null) {
@@ -90,9 +94,10 @@ public class PostController {
                     ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
                     image = ImageIO.read(bis);
                     bis.close();
-                    File outputfile = new File(  "images/" + timeStamp + "---" + Integer.toString(count++));
+                    File outputfile = new File(  "images/" + timeStamp + "---" + Integer.toString(count));
                     ImageIO.write(image, "jpeg", outputfile);
-                    imageFileNames.add(timeStamp + "---" + Integer.toString(count++));
+                    imageFileNames.add(timeStamp + "---" + Integer.toString(count));
+                    count ++;
                 } catch (IOException e) {
                     System.out.println("image io exception");
                 }
@@ -101,8 +106,9 @@ public class PostController {
         post.postPhotos = imageFileNames;
 
         System.out.println("uid" + uid);
-        post.posterName = UserTableInteract.getUser(uid).userName;
-
+        if (UserTableInteract.getUser(uid) != null) {
+            post.posterName = UserTableInteract.getUser(uid).userName;
+        }
 
         ////
         int postID = PostTableInteract.addPost(post);
@@ -131,22 +137,25 @@ public class PostController {
 
         }
 
-        return post;
+        return postID;
     }
 
     @RequestMapping(value="/{id}/{pid}", method=RequestMethod.POST)
-    public void confirm(@PathVariable("id") Integer uid, @PathVariable("id") Integer pid){
+    public void confirm(@PathVariable("id") Integer uid, @PathVariable("pid") Integer pid){
         System.out.println("confirm post" + pid);
         Post post  = PostTableInteract.getPost(pid);
         post.isActive = false;
         ArrayList<Integer> requestIDs = post.requestsIDs;
         if (requestIDs != null) {
             for (Integer rid : requestIDs) {
+
                 Request request = RequestTableInteract.getRequest(rid);
-                if (request.status != "ACCEPTED") {
+                System.out.println(request.status);
+                if (!request.status.equals("ACCEPTED")) {
                     request.status = "DENIED";
                 }
                 else {
+                    System.out.println("yeah");
                     Notification notification = new Notification();
                     notification.type = Notification.RATING;
                     notification.fromUserID = post.posterID;
@@ -154,7 +163,10 @@ public class PostController {
                     notification.toUserID = request.requesterID;
                     notification.toUserName = UserTableInteract.getUser(request.requesterID).userName;
                     notification.title = post.title;
-                    NotificationManager.nm.addNotification(notification.toUserID,notification);
+                    System.out.println(notification);
+                    System.out.println("sending this to " + notification.toUserID);
+
+                    NotificationManager.nm.addNotification(notification.fromUserID,notification);
 
                     Notification notification2 = new Notification();
                     notification2.type = Notification.RATING;
@@ -163,19 +175,23 @@ public class PostController {
                     notification2.fromUserID = request.requesterID;
                     notification2.fromUserName = UserTableInteract.getUser(request.requesterID).userName;
                     notification2.title = post.title;
-                    NotificationManager.nm.addNotification(notification.toUserID,notification2);
+                    System.out.println("sending this to " + notification2.toUserID);
+                    System.out.println(notification2);
+                    NotificationManager.nm.addNotification(notification2.fromUserID,notification2);
                 }
             }
         }
+        System.out.println(post.isActive?"active":"not active");
         PostTableInteract.updatePost(post);
     }
 
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
-    public String put(@PathVariable("id") Integer id, @RequestBody Post post){
+    public String put(@PathVariable("id") Integer uid, @RequestBody Post post){
+        if (PostTableInteract.getPost(post.postID)==null) {return "failure";}
         System.out.println("edit post"+post.postID);
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        timeStamp = timeStamp.replace(",","-");
+        timeStamp = timeStamp.replace(".","-");
         int count = 0;
         ArrayList<String> imageFileNames = new ArrayList<String>();
         if (post.postPhotos != null) {
@@ -188,25 +204,31 @@ public class PostController {
                     ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
                     image = ImageIO.read(bis);
                     bis.close();
-                    File outputfile = new File(  "images/" + timeStamp + "---" + Integer.toString(count++));
+                    File outputfile = new File(  "images/" + timeStamp + "---" + Integer.toString(count));
                     ImageIO.write(image, "jpeg", outputfile);
-                    imageFileNames.add(timeStamp + "---" + Integer.toString(count++));
+                    imageFileNames.add(timeStamp + "---" + Integer.toString(count));
                     String s = ""; //no use just to suppress warning
+                    count ++;
                 } catch (IOException e) {
                     System.out.println("image io exception");
                 }
             }
         }
         post.postPhotos = imageFileNames;
+        if (UserTableInteract.getUser(uid) != null) {
+            post.posterName = UserTableInteract.getUser(uid).userName;
+        }
+
         PostTableInteract.updatePost(post);
-        return "put";
+        return "success";
     }
 
     @RequestMapping(value="/{id}/{postID}",method=RequestMethod.DELETE)
     public String delete(@PathVariable("id") Integer id, @PathVariable("postID") Integer pid){
         System.out.println("delete post"+pid);
+        if (PostTableInteract.getPost(pid)==null) {return "failure";}
         PostTableInteract.deletePost(pid);
-        return "delete";
+        return "success";
     }
 
 

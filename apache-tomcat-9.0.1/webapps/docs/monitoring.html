@@ -179,7 +179,7 @@ session: ${sessions.0}
 manager.length: ${manager.length}
 manager.0.name: ${manager.0.name}
 manager.1.name: ${manager.1.name}
-hello: ${Hello}
+controller: ${Hello}
 manager.ClusterTest.0.name: ${manager.ClusterTest.0.name}
 manager.ClusterTest.0.activeSessions: ${manager.ClusterTest.0.activeSessions}
 manager.ClusterTest.0.counterSend_EVT_SESSION_EXPIRED:
@@ -581,7 +581,7 @@ Example to get remote MBean session attribute from session ${sessionid.0}
 <div class="codeBox"><pre><code>  &lt;jmx:invoke
     name="Catalina:type=Manager,context=/ClusterTest,host=localhost"
     operation="getSessionAttribute"
-    resultproperty="hello"&gt;
+    resultproperty="controller"&gt;
      &lt;arg value="${sessionid.0}"/&gt;
      &lt;arg value="Hello" /&gt;
   &lt;/jmx:invoke&gt;</code></pre></div>

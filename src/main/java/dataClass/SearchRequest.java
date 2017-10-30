@@ -12,26 +12,25 @@ public class SearchRequest {
 
     public boolean match(Post post)
     {
-        keyword = keyword.toLowerCase();
-        category = category.toLowerCase();
         boolean keywordMatch = false;
-        if(post.title.toLowerCase().contains(keyword))
-        {
-            keywordMatch = true;
-        }
-        else
-        {
-            for(String tag : post.tags)
-            {
-                if(tag.toLowerCase().contains(keyword))
-                {
-                    keywordMatch = true;
-                    break;
+        if (keyword != null) {
+            keyword = keyword.toLowerCase();
+            if(post.title.toLowerCase().contains(keyword)) {
+                keywordMatch = true;
+            }
+            else {
+                for(String tag : post.tags) {
+                    if(tag.toLowerCase().contains(keyword)){
+                        keywordMatch = true;
+                        break;
+                    }
                 }
             }
         }
-        boolean categoryMatch = (category=="") || category.equals(post.category.toLowerCase());
-        //boolean timeMatch = time[0]<= post.timePeriod[0] && time[1]>=post.timePeriod[1];
+        else {
+            keywordMatch = true;
+        }
+        boolean categoryMatch = (category == null) || category.toLowerCase().equals(post.category.toLowerCase());
         boolean timeMatch = true;
         boolean allergyMatch = true;
         //TODO
@@ -44,6 +43,9 @@ public class SearchRequest {
             }
         }
         */
+//        System.out.println(keywordMatch?"match":"no");
+//        System.out.println(categoryMatch?"match":"no");
+//        System.out.println(post.isActive?"match":"no");
         return keywordMatch && categoryMatch && timeMatch && allergyMatch && post.isActive;
     }
 

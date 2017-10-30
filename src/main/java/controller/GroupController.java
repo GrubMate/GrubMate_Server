@@ -38,19 +38,20 @@ public class GroupController {
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public Integer post(@PathVariable("id") Integer uid, @RequestBody Group group){
         System.out.println("post grou[" + uid);
+        if (UserTableInteract.getUser(uid)==null) {
+            return -1;
+        }
         Integer gid = GroupInfoTableInteract.addGroupinfo(group);
         return gid;
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.PUT)
-    public void put(@PathVariable("id") Integer id, @RequestBody Group group){
+    public String put(@PathVariable("id") Integer id, @RequestBody Group group){
+        if (GroupInfoTableInteract.getGroupInfo(group.groupID)==null) {
+            return "failure";
+        }
         GroupInfoTableInteract.updateGroupInfo(group);
+        return "success";
     }
-
-    @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Integer id){
-
-    }
-
 
 }

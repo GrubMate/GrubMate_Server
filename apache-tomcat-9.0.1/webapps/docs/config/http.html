@@ -1244,7 +1244,7 @@
           Description
         </th></tr><tr><td><code class="attributeName">sniParseLimit</code></td><td>
       <p>In order to implement SNI support, Tomcat has to parse the first TLS
-      message received on a new TLS connection (the client hello) to extract the
+      message received on a new TLS connection (the client controller) to extract the
       requested server name. The message needs to be buffered so it can then be
       passed to the JSSE implementation for normal TLS processing. In theory,
       this first message could be very large although in practice it is

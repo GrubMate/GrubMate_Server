@@ -23,6 +23,7 @@ public class NotificationManager {
     }
 
     public void addNotification(Integer receiverID, Notification notification) {
+        System.out.println(receiverID + notification.toString());
         if (qMap.get(receiverID) == null) {
             qMap.put(receiverID, new LinkedList<>());
         }

@@ -2,6 +2,7 @@ package controller;
 
 import dataClass.Post;
 import dataClass.Request;
+import dataClass.User;
 import model.PostTableInteract;
 import model.RequestTableInteract;
 import model.UserTableInteract;
@@ -32,15 +33,15 @@ public class RequestController {
 
     @RequestMapping(value="/{id}/{rid}/{accept}",method=RequestMethod.GET)
     public String respondRequest(@PathVariable("id") Integer id, @PathVariable("rid") Integer rid, @PathVariable("accept") Integer accept){
-        System.out.println(accept==1 ? "ACCEPTED" : "DENIED");
+        System.out.println((accept==1 ? "ACCEPTED" : "DENIED") + rid);
         Request req = RequestTableInteract.getRequest(rid);
         req.status = accept==1 ? "ACCEPTED" : "DENIED";
         RequestTableInteract.updateRequest(req);
         Post post = PostTableInteract.getPost(req.targetPostID);
         post.leftQuantity -= 1;
-        if (post.leftQuantity <=0) {
-            post.isActive = false;
-        }
+//        if (post.leftQuantity <=0) {
+//            post.isActive = false;
+//        }
         PostTableInteract.updatePost(post);
         Integer requesterID = req.requesterID;
         Notification reqn = new Notification();
@@ -49,12 +50,18 @@ public class RequestController {
         reqn.requesterID = requesterID;
         reqn.posterID = PostTableInteract.getPost(req.targetPostID).posterID;
         NotificationManager.nm.addNotification(requesterID,reqn);
-        return "";
+        return "success";
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
-    public void post(@PathVariable("id") Integer id, @RequestBody Request req){
+    public Integer post(@PathVariable("id") Integer id, @RequestBody Request req){
         System.out.println("request ID " + id);
+        if (UserTableInteract.getUser(id) == null) {
+            return -1;
+        }
+        if (req.targetPostID == null || PostTableInteract.getPost(req.targetPostID)==null) {
+            return -1;
+        }
         int reqID = RequestTableInteract.addRequest(req);
         Integer toWhom = PostTableInteract.getPost(req.targetPostID).posterID;
         Notification notification = new Notification();
@@ -64,18 +71,11 @@ public class RequestController {
         notification.requesterName = UserTableInteract.getUser(req.requesterID).userName;
         notification.title = PostTableInteract.getPost(req.targetPostID).title;
         notification.address = PostTableInteract.getPost(req.targetPostID).address;
+        System.out.println(toWhom);
+        System.out.println(notification);
         NotificationManager.nm.addNotification(toWhom,notification);
+
+        return reqID;
     }
 
-    @RequestMapping(value="/{id}",method=RequestMethod.PUT)
-    public String put(@PathVariable("id") Integer id){
-        System.out.println("put"+id);
-        return "put";
-    }
-
-    @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-    public String delete(@PathVariable("id") Integer id){
-        System.out.println("delete"+id);
-        return "delete";
-    }
 }

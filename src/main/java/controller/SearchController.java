@@ -11,11 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/search")
 public class SearchController {
-    @RequestMapping(value="/{id}",method= RequestMethod.GET)
-    public String get(@PathVariable("id") Integer id){
-        System.out.println("sub get"+id);
-        return "get";
-    }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
     public PostFeed post(@PathVariable("id") Integer uid, @RequestBody SearchField sf){
@@ -32,15 +27,4 @@ public class SearchController {
         return feed;
     }
 
-    @RequestMapping(value="/{id}",method=RequestMethod.PUT)
-    public String put(@PathVariable("id") Integer id){
-        System.out.println("put"+id);
-        return "put";
-    }
-
-    @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-    public String delete(@PathVariable("id") Integer id){
-        System.out.println("delete"+id);
-        return "delete";
-    }
 }

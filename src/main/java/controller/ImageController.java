@@ -22,7 +22,7 @@ public class ImageController {
     public ResponseEntity<byte[]> get(@PathVariable("imageID") String iid) {
         byte[] b = new byte[1];
         try {
-            RandomAccessFile f = new RandomAccessFile("images/" + iid + ".jpg", "r");
+            RandomAccessFile f = new RandomAccessFile("images/" + iid  , "r");
             b = new byte[(int)f.length()];
             f.readFully(b);
 

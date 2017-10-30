@@ -39,14 +39,14 @@
         <td><b>Result</b></td>
       </thead>
       <tr>
-        <td>\${'hello'} wo\${'rld'}</td>
+        <td>\${'controller'} wo\${'rld'}</td>
         <td>String</td>
-        <td><jsp:setProperty name="values" property="stringValue" value="${'hello'} wo${'rld'}"/>${values.stringValue}</td>
+        <td><jsp:setProperty name="values" property="stringValue" value="${'controller'} wo${'rld'}"/>${values.stringValue}</td>
       </tr>
       <tr>
-        <td>\${'hello'} wo\${'rld'}</td>
+        <td>\${'controller'} wo\${'rld'}</td>
         <td>String</td>
-        <td><my:values string="${'hello'} wo${'rld'}"/></td>
+        <td><my:values string="${'controller'} wo${'rld'}"/></td>
       </tr>
       <tr>
         <td>\${1+2}.\${220}</td>
@@ -73,14 +73,14 @@
          https://bz.apache.org/bugzilla/show_bug.cgi?id=47413
        -->
       <tr>
-        <td>\${undefinedFoo}hello world\${undefinedBar}</td>
+        <td>\${undefinedFoo}controller world\${undefinedBar}</td>
         <td>String</td>
-        <td><jsp:setProperty name="values" property="stringValue" value="${undefinedFoo}hello world${undefinedBar}"/>${values.stringValue}</td>
+        <td><jsp:setProperty name="values" property="stringValue" value="${undefinedFoo}controller world${undefinedBar}"/>${values.stringValue}</td>
       </tr>
       <tr>
-        <td>\${undefinedFoo}hello world\${undefinedBar}</td>
+        <td>\${undefinedFoo}controller world\${undefinedBar}</td>
         <td>String</td>
-        <td><my:values string="${undefinedFoo}hello world${undefinedBar}"/></td>
+        <td><my:values string="${undefinedFoo}controller world${undefinedBar}"/></td>
       </tr>
       <tr>
         <td>\${undefinedFoo}\${undefinedBar}</td>

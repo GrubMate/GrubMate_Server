@@ -39,14 +39,14 @@
         &lt;td>&lt;b>Result&lt;/b>&lt;/td>
       &lt;/thead>
       &lt;tr>
-        &lt;td>\${'hello'} wo\${'rld'}&lt;/td>
+        &lt;td>\${'controller'} wo\${'rld'}&lt;/td>
         &lt;td>String&lt;/td>
-        &lt;td>&lt;jsp:setProperty name="values" property="stringValue" value="${'hello'} wo${'rld'}"/>${values.stringValue}&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="stringValue" value="${'controller'} wo${'rld'}"/>${values.stringValue}&lt;/td>
       &lt;/tr>
       &lt;tr>
-        &lt;td>\${'hello'} wo\${'rld'}&lt;/td>
+        &lt;td>\${'controller'} wo\${'rld'}&lt;/td>
         &lt;td>String&lt;/td>
-        &lt;td>&lt;my:values string="${'hello'} wo${'rld'}"/>&lt;/td>
+        &lt;td>&lt;my:values string="${'controller'} wo${'rld'}"/>&lt;/td>
       &lt;/tr>
       &lt;tr>
         &lt;td>\${1+2}.\${220}&lt;/td>
@@ -73,14 +73,14 @@
          https://bz.apache.org/bugzilla/show_bug.cgi?id=47413
        -->
       &lt;tr>
-        &lt;td>\${undefinedFoo}hello world\${undefinedBar}&lt;/td>
+        &lt;td>\${undefinedFoo}controller world\${undefinedBar}&lt;/td>
         &lt;td>String&lt;/td>
-        &lt;td>&lt;jsp:setProperty name="values" property="stringValue" value="${undefinedFoo}hello world${undefinedBar}"/>${values.stringValue}&lt;/td>
+        &lt;td>&lt;jsp:setProperty name="values" property="stringValue" value="${undefinedFoo}controller world${undefinedBar}"/>${values.stringValue}&lt;/td>
       &lt;/tr>
       &lt;tr>
-        &lt;td>\${undefinedFoo}hello world\${undefinedBar}&lt;/td>
+        &lt;td>\${undefinedFoo}controller world\${undefinedBar}&lt;/td>
         &lt;td>String&lt;/td>
-        &lt;td>&lt;my:values string="${undefinedFoo}hello world${undefinedBar}"/>&lt;/td>
+        &lt;td>&lt;my:values string="${undefinedFoo}controller world${undefinedBar}"/>&lt;/td>
       &lt;/tr>
       &lt;tr>
         &lt;td>\${undefinedFoo}\${undefinedBar}&lt;/td>

@@ -15,13 +15,13 @@ import java.util.ArrayList;
 
 public class SubscriptionTableInteract {
 
-    public static BasicDBObject addSubscription(Subscription sub)
+    public static int addSubscription(Subscription sub)
     {
         return addSubscription(new Gson().toJson(sub));
     }
 
 
-    public static BasicDBObject addSubscription(String subInfo) {
+    public static int addSubscription(String subInfo) {
         BasicDBObject obj = (BasicDBObject) JSON.parse(subInfo);
 
         int newID = IDCounter.incrementTargetID(IDCounter.SUBSCRIPTION);
@@ -54,7 +54,7 @@ public class SubscriptionTableInteract {
 
         SharedObject.mi.userTable.update(query, updateObj);
 
-        return obj;
+        return newID;
     }
 
     public static Subscription getSubscription(Integer subID)
@@ -77,7 +77,7 @@ public class SubscriptionTableInteract {
     {
         ArrayList<Subscription> result = new ArrayList<Subscription>();
         User user = UserTableInteract.getUser(userID);
-        if (user.subscriptionID == null) {
+        if (user == null || user.subscriptionID == null) {
             return result;
         }
         for(int subID : user.subscriptionID)

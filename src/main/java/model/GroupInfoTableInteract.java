@@ -99,7 +99,7 @@ public class GroupInfoTableInteract {
             return new Gson().fromJson(s,Group.class);
         }
 
-        System.out.println("Trying to get non-existing user. returning null");
+        System.out.println("Trying to get non-existing group. returning null");
         return null;
     }
 

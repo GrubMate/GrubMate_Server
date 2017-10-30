@@ -19,7 +19,7 @@ public class User {
     public ArrayList<Integer> postsID;
     public ArrayList<Integer> requestsID;
     public ArrayList<Integer> subscriptionID;
-    public String[] friendList;
+    public ArrayList<String> friendList;
     public ArrayList<String> commentsAsProvider;
     public ArrayList<String> commentsAsConsumer;
 

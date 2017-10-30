@@ -23,6 +23,7 @@ public class SubscriptionController {
         return feed;
     }
 
+
     @RequestMapping(value="/{id}/{sid}",method= RequestMethod.GET)
     public PostFeed getSubPost(@PathVariable("id") Integer uid, @PathVariable("sid") Integer sid){
         Subscription sub = SubscriptionTableInteract.getSubscription(sid);
@@ -38,9 +39,9 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value="/{id}",method=RequestMethod.POST)
-    public Subscription post(@PathVariable("id") Integer uid, @RequestBody Subscription sub){
+    public int post(@PathVariable("id") Integer uid, @RequestBody Subscription sub){
         System.out.print("new sub" + uid);
-        SubscriptionTableInteract.addSubscription(sub);
+        int subID = SubscriptionTableInteract.addSubscription(sub);
 
         Integer subscriberID = sub.subscriberID;
         SearchRequest sr = new SearchRequest();
@@ -48,9 +49,11 @@ public class SubscriptionController {
         sr.keyword = sub.query;
         sr.allergy = sub.allergyInfo;
         sr.userID = sub.subscriberID;
+        sr.userID = uid;
         ArrayList<Post> results = PostTableInteract.searchPost(sr);
 
         for (Post p : results) {
+            System.out.println("post match!" + p.title);
             Notification notification = new Notification();
             notification.type = Notification.MATCH;
             notification.title = p.title;
@@ -60,13 +63,17 @@ public class SubscriptionController {
             NotificationManager.nm.addNotification(sub.subscriberID,notification);
         }
 
-        return sub;
+        return subID;
     }
 
 
     @RequestMapping(value="/{id}/{sid}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Integer id, @PathVariable("sid") Integer sid){
+    public String delete(@PathVariable("id") Integer id, @PathVariable("sid") Integer sid){
         System.out.println("delete sub"+id);
+        if (SubscriptionTableInteract.getSubscription(sid) == null) {
+            return "failure";
+        }
         SubscriptionTableInteract.deleteSubscription(sid);
+        return "success";
     }
 }

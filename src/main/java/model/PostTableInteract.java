@@ -86,6 +86,7 @@ public class PostTableInteract {
         User user  = UserTableInteract.getUser(userID);
 
         //go though each of his frineds
+        if (user.allFriends == null) {return result;}
         for(int friendID : user.allFriends)
         {
             User friend = UserTableInteract.getUser(friendID);
@@ -94,8 +95,9 @@ public class PostTableInteract {
             {
                 Post post = PostTableInteract.getPost(postID);
                 String pp = new Gson().toJson(post);
-                System.out.println(pp);
-                if(post.isActive)
+                //System.out.println(pp);
+                if(post.isActive==null || post.leftQuantity == null) {continue;}
+                if(post.isActive && post.leftQuantity > 0)
                 {
                     if(post.groupIDs==null || post.groupIDs.get(0)==null)
                     {
@@ -119,10 +121,11 @@ public class PostTableInteract {
 
     public static ArrayList<Post> searchPost(SearchRequest searchRequest)
     {
+        System.out.println("entering search");
         ArrayList<Post> result = new ArrayList<>();
         ArrayList<Post> postPools = getAllVisiblePosts(searchRequest.userID);
-        for(Post post : postPools)
-        {
+        for(Post post : postPools) {
+            System.out.println("checking");
             if(searchRequest.match(post))
             {
                 result.add(post);
@@ -193,12 +196,12 @@ public class PostTableInteract {
 
 
         Integer posterID = (Integer)obj.get(Post.POSTER_ID);
-        System.out.println("poster id is "+ p.posterID);
+        //System.out.println("poster id is "+ p.posterID);
 
         User targetU = UserTableInteract.getUser(posterID);
-        System.out.println(targetU.postsID);
+        //System.out.println(targetU.postsID);
         ArrayList<Integer> postList = targetU.postsID;
-        System.out.println( postList.toString() );
+        //System.out.println( postList.toString() );
 
         if (targetU.postsID == null)
         {
@@ -246,11 +249,11 @@ public class PostTableInteract {
     {
         ArrayList<Post> result = new ArrayList<>();
         User user = UserTableInteract.getUser(userID);
-
+        if (user == null)  return result;
         if (user.postsID!= null) {
             for(int postID : user.postsID)
             {
-                System.out.println("post id" + postID);
+                //System.out.println("post id" + postID);
                 result.add(getPost(postID));
             }
         }
