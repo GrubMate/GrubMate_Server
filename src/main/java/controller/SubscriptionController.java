@@ -32,6 +32,7 @@ public class SubscriptionController {
         sr.keyword = sub.query;
         sr.allergy = sub.allergyInfo;
         sr.userID = sub.subscriberID;
+        sr.timePeriod = sub.timePeriod;
         PostFeed feed = new PostFeed();
         feed.id = uid;
         feed.itemList = PostTableInteract.searchPost(sr);
@@ -49,6 +50,7 @@ public class SubscriptionController {
         sr.keyword = sub.query;
         sr.allergy = sub.allergyInfo;
         sr.userID = sub.subscriberID;
+        sr.timePeriod = sub.timePeriod;
         sr.userID = uid;
         ArrayList<Post> results = PostTableInteract.searchPost(sr);
 

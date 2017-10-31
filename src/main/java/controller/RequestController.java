@@ -38,7 +38,10 @@ public class RequestController {
         req.status = accept==1 ? "ACCEPTED" : "DENIED";
         RequestTableInteract.updateRequest(req);
         Post post = PostTableInteract.getPost(req.targetPostID);
-        post.leftQuantity -= 1;
+        if (accept == 1) {
+            post.leftQuantity -= 1;
+        }
+
 //        if (post.leftQuantity <=0) {
 //            post.isActive = false;
 //        }

@@ -6,12 +6,16 @@ public class SearchRequest {
     public int userID;
     public String keyword;
     public String category;
-    public Integer[] time;
+    public String time;
     public String timePeriod; //temp
     public Boolean[] allergy;
 
-    public boolean match(Post post)
-    {
+    public boolean match(Post post) {
+
+        if (post.category == null || post.timePeriod == null || post.title == null) {
+            return false;
+        }
+
         boolean keywordMatch = false;
         if (keyword != null) {
             keyword = keyword.toLowerCase();
@@ -30,8 +34,13 @@ public class SearchRequest {
         else {
             keywordMatch = true;
         }
+
+
+
         boolean categoryMatch = (category == null) || category.toLowerCase().equals(post.category.toLowerCase());
-        boolean timeMatch = true;
+
+        boolean timeMatch = (timePeriod == null) || timePeriod.toLowerCase().equals(post.timePeriod.toLowerCase());
+
         boolean allergyMatch = true;
         //TODO
         /*
@@ -43,10 +52,12 @@ public class SearchRequest {
             }
         }
         */
+//        System.out.println(timePeriod == null? " " : timePeriod.toLowerCase());
+//        System.out.println(post.timePeriod.toLowerCase());
 //        System.out.println(keywordMatch?"match":"no");
 //        System.out.println(categoryMatch?"match":"no");
 //        System.out.println(post.isActive?"match":"no");
-        return keywordMatch && categoryMatch && timeMatch && allergyMatch && post.isActive;
+        return keywordMatch && categoryMatch && timeMatch && allergyMatch && post.isActive && (post.leftQuantity>0);
     }
 
 }

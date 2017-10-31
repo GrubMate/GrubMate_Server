@@ -72,7 +72,7 @@ public class SearchControllerTests {
     }
 
     @Test
-    public void SearcyByTitle() throws Exception {
+    public void bSearcyByTitle() throws Exception {
         int userID = 2;
         SearchField sf = new SearchField();
         sf.title = "csci310";
@@ -87,7 +87,7 @@ public class SearchControllerTests {
 
 
     @Test
-    public void SearcyByCategory() throws Exception {
+    public void bSearcyByCategory() throws Exception {
         int userID = 2;
         SearchField sf = new SearchField();
         sf.category = "Asian";
@@ -102,7 +102,7 @@ public class SearchControllerTests {
 
 
     @Test
-    public void SearcyByTime() throws Exception {
+    public void bSearcyByTime() throws Exception {
         int userID = 2;
         SearchField sf = new SearchField();
         sf.timePeriod = "Breakfast";

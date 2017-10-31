@@ -122,17 +122,17 @@ public class PostController {
             sr.keyword = sub.query;
             sr.allergy = sub.allergyInfo;
             sr.userID = sub.subscriberID;
-            ArrayList<Post> results = PostTableInteract.searchPost(sr);
-            for (Post p: results) {
-                if (p.posterID == postID) {
-                    Notification notification = new Notification();
-                    notification.type = Notification.MATCH;
-                    notification.title = p.title;
-                    notification.posterID = p.posterID;
-                    notification.posterName = UserTableInteract.getUser(p.posterID).userName;
-                    notification.postID = p.postID;
-                    NotificationManager.nm.addNotification(sub.subscriberID,notification);
-                }
+            sr.timePeriod = sub.timePeriod;
+            Post p = PostTableInteract.getPost(postID);
+            if (sr.match(p)){
+                Notification notification = new Notification();
+                notification.type = Notification.MATCH;
+                notification.title = p.title;
+                notification.posterID = p.posterID;
+                notification.posterName = UserTableInteract.getUser(p.posterID).userName;
+                notification.postID = p.postID;
+                NotificationManager.nm.addNotification(sub.subscriberID,notification);
+
             }
 
         }

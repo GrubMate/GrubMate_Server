@@ -20,6 +20,7 @@ public class SearchController {
         sr.keyword = sf.title;
         sr.allergy = sf.allergyInfo;
         sr.userID = uid;
+        sr.timePeriod = sf.timePeriod;
 
         PostFeed feed = new PostFeed();
         feed.id = uid;
